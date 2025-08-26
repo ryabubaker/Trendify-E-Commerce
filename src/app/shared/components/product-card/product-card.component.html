@@ -1,0 +1,47 @@
+<div class="card bg-white rounded-lg shadow-md p-2 flex flex-col">
+  <div
+    class="product-img h-[250px] relative overflow-hidden  rounded-lg bg-bg-main"
+  >
+    <img
+      [src]="product.imageCover"
+      [alt]="product.title"
+      class="w-full h-full object-contain"
+    />
+
+    @if (product.priceAfterDiscount) {
+    <div
+      class="absolute bottom-2 left-2 bg-main text-white text-md font-semibold px-2 py-1 rounded"
+    >
+      -{{ calculateDiscount(product.price, product.priceAfterDiscount) }}%
+    </div>
+    }
+
+    <div class="likeBtn drop-shadow-[0_0_5.66px_rgba(0,0,0,0.1)] bg-white text-main text-xl size-9 flex justify-center items-center absolute top-2 right-2 rounded-full">
+      <i class="far fa-heart"></i>
+    </div>
+  </div>
+
+  <div class="product-details mt-3 flex-1 relative">
+    <p class="text-lg font-medium text-text">{{ product.title}}</p>
+    <div class="mb-1">
+      <span class="text-text text-md font-medium">
+        <i class="fas fa-star size-4 text-review"></i>
+        {{ product.ratingsAverage }}
+      </span>
+      <span class="text-grey-2 ml-1 text-xs font-medium"
+        >({{ product.ratingsQuantity }} reviews)</span
+      >
+    </div>
+    <p class="text-main font-semibold text-md">
+      {{ product.priceAfterDiscount || product.price }} EGP @if
+      (product.priceAfterDiscount) {
+      <span class="text-grey-2 line-through ml-1">{{ product.price }} EGP</span>
+      }
+    </p>
+    <button
+      class="addToCart absolute bottom-0 right-0 bg-main text-white rounded-[10px] size-8 flex items-center justify-center drop-shadow-[0_0_48px_rgba(0,0,0,0.8)] hover:bg-main/90 transition"
+    >
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</div>
