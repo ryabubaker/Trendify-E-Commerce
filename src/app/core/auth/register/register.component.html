@@ -1,0 +1,189 @@
+<div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+  <!-- Left: Form -->
+  <div class="flex items-center justify-center px-8 py-12 col-span-1">
+    <div class="w-full max-w-md">
+      <h2 class="text-3xl font-semibold text-text font-poppins">
+        Create a Account
+      </h2>
+      <p class="mt-2 text-grey-2">Create a new account</p>
+
+      <form class="mt-6 space-y-4">
+        <!-- Username -->
+        <div>
+          <label class="block text-base font-medium text-text mb-2"
+            >User Name</label
+          >
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Ahmed"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
+            />
+            <span
+              class="absolute start-0 top-1/2 translate-x-1/2 -translate-y-1/2 text-main"
+            >
+              <i class="fa fa-user"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-base font-medium text-text mb-2"
+            >E-mail</label
+          >
+          <div class="relative">
+            <input
+              type="email"
+              placeholder="Ahmed@gmail.com"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
+            />
+            <span
+              class="absolute start-0 top-1/2 translate-x-1/2 -translate-y-1/2"
+              ><i class="far fa-envelope text-main"></i
+            ></span>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-base font-medium text-text mb-2"
+            >Password</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              placeholder="xxxxxxxxxxxx"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
+            />
+            <span
+              class="absolute start-0 top-1/2 translate-x-1/2 -translate-y-1/2 text-main"
+            >
+              <i class="fa fa-lock"></i>
+            </span>
+            <span
+              class="absolute inset-y-0 right-3 flex items-center text-main cursor-pointer"
+            >
+              <i class="fa fa-eye-slash"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <label class="block text-base font-medium text-text mb-2"
+            >Confirm Password</label
+          >
+          <div class="relative">
+            <input
+              type="password"
+              placeholder="xxxxxxxxxxxx"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
+            />
+            <span
+              class="absolute start-0 top-1/2 translate-x-1/2 -translate-y-1/2 text-main"
+            >
+              <i class="fa fa-lock"></i>
+            </span>
+            <span
+              class="absolute inset-y-0 right-3 flex items-center text-main cursor-pointer"
+            >
+              <i class="fa fa-eye-slash"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <!-- Terms -->
+          <div class="flex items-center gap-2">
+            <input
+              type="checkbox"
+              class="h-4 w-4 rounded border-main text-main checked:bg-main focus:ring-0 focus:outline-none drop-shadow-[0_0_2.3px_rgb(139,94,53)]"
+            />
+
+            <label class="text-sm text-text"
+              >I agree to the
+              <a href="#" class="text-main underline"
+                >Terms of Conditions</a
+              ></label
+            >
+          </div>
+
+          <!-- Button -->
+          <button
+            type="submit"
+            class="w-full rounded-full bg-main hover:bg-[#A97342] px-4 py-3 text-white font-medium hover:bg-brown-700 transition"
+          >
+            Sign Up
+          </button>
+          <p class="text-grey-2 text-center text-sm">Or Sign up With</p>
+        </div>
+
+        <!-- Socials -->
+        <div class="flex justify-center gap-6">
+          <button class="text-2xl"><i class="fab fa-google"></i></button>
+          <button class="text-2xl"><i class="fab fa-facebook"></i></button>
+          <button class="text-2xl"><i class="fab fa-apple"></i></button>
+        </div>
+
+        <!-- Already account -->
+        <p class="text-center font-medium text-grey-2 mt-3">
+          Already have an account?
+          <a routerLink="/login" class="text-main underline">Log In</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right: Image Section -->
+  <div
+    class="relative hidden lg:flex items-center justify-center h-full overflow-hidden col-span-1"
+  >
+    <!-- Swiper -->
+    <swiper-container
+      class="mySwiper absolute inset-0"
+      speed="600"
+      parallax="true"
+      loop="true"
+      pagination="true"
+      pagination-clickable="true"
+      space-between="0"
+    >
+      <swiper-slide>
+        <img
+          class="w-full h-full object-cover"
+          src="/images/auth/imgi_1_auth-slider1.jpg"
+          alt=""
+        />
+      </swiper-slide>
+      <swiper-slide>
+        <img
+          class="w-full h-full object-cover"
+          src="/images/auth/imgi_2_auth-slider2.jpg"
+          alt=""
+        />
+      </swiper-slide>
+      <swiper-slide>
+        <img
+          class="w-full h-full object-cover"
+          src="/images/auth/imgi_3_auth-slider4.webp"
+          alt=""
+        />
+      </swiper-slide>
+    </swiper-container>
+
+    <!-- Text Content -->
+    <div class="absolute z-50 bottom-40 left-[50%] transform -translate-x-1/2">
+      <h1
+        class="text-[32px] font-bold leading-[27px] text-white text-center font-poppins"
+      >
+        Welcome to Trendify
+      </h1>
+      <p
+        class="font-medium text-[20px] leading-[30px] text-white text-center mt-4"
+      >
+        Discover the latest trends, express your unique style
+      </p>
+    </div>
+  </div>
+</div>
