@@ -1,1 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@import "flowbite/src/themes/default";
+
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@theme {
+  /* Colors */
+  --color-main: #8b5e35;
+  --color-secondary: #9b7e5c;
+  --color-text: #090f41;
+  --color-grey-2: #9d9daa;
+  --color-bg-main: #f6f6f6;
+  --color-card: #ffffff;
+  --color-review: #ffc000;
+  --color-error: #d00439;
+  --color-footer-bg: #2e2e2e;
+
+  /* Font */
+  --font-poppins: "Poppins", sans-serif;
+  --font-hedvig: "Hedvig Letters Serif", serif;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-main font-poppins;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-hedvig text-main;
+  }
+}
+
+@layer components {
+  .section-title {
+    @apply text-center;
+  }
+
+  .section-title h2 {
+    @apply text-2xl lg:text-3xl;
+  }
+
+  .section-title p {
+    @apply mt-1 capitalize text-text font-semibold text-3xl lg:text-[40px];
+  }
+}
+
+@layer utilities {
+  .custom-container {
+    @apply px-5 md:px-0 md:container m-auto;
+  }
+}
+
+swiper-container {
+  --swiper-pagination-color: var(--color-main);
+  --swiper-pagination-bullet-width: 20px;
+  --swiper-pagination-bullet-active-width: 25px;
+  --swiper-pagination-bullet-border-radius: 10px;
+  --swiper-pagination-bullet-height: 4px;
+  --swiper-pagination-bottom: 108px;
+  --swiper-pagination-bullet-inactive-color: #fff;
+  --swiper-pagination-bullet-inactive-opacity: 0.5;
+  --swiper-pagination-bullet-horizontal-gap: 4px;
+  --swiper-pagination-bullet-vertical-gap: 4px;
+}
