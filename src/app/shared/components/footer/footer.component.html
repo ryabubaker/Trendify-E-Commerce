@@ -1,9 +1,6 @@
 <footer class="bg-footer-bg py-12 text-bg-main">
   <div class="custom-container">
-    <!-- GRID WRAPPER -->
-    <div
-      class="grid lg:grid-cols-3 xl:grid-cols-[2fr_1fr_1fr_1fr] gap-6 xl:gap-[60px]"
-    >
+    <div class="grid sm:grid-cols-[2fr_1fr] lg:grid-cols-[2fr_1fr_1fr_1fr] gap-10 lg:gap-[60px]">
       <!-- Logo & Newsletter -->
       <div class="col-span-full xl:col-span-1">
         <h2 class="text-[32px] text-white font-hedvig">Trendify</h2>
@@ -16,11 +13,12 @@
           <input
             type="email"
             placeholder="Enter your email"
-            class="flex-1 px-3 py-3 rounded-[10px] border border-main bg-white placeholder-grey-2 placeholder:text-base/1.5 placeholder:font-poppins focus:outline-none"
+            class="flex-1 px-3 py-3 rounded-[10px] border border-main bg-white placeholder-grey-2 placeholder:text-base placeholder:font-poppins focus:outline-none"
           />
           <button
             type="submit"
-            class="px-6 py-3 rounded-[10px] border border-bg-main bg-secondary text-base text-white transition"
+            class="px-6 py-3 rounded-[10px] border border-bg-main bg-secondary 
+                   text-base text-white transition"
           >
             Subscribe
           </button>
@@ -32,203 +30,58 @@
         </p>
       </div>
 
-      <!-- Accordion (MOBILE <1024px) -->
-      <div class="block lg:hidden col-span-full">
-        <div
-          id="footer-accordion"
-          data-accordion="collapse"
-          data-active-classes="text-white"
-          data-inactive-classes="text-white"
-        >
-          <!-- About Us -->
-          <h2>
-            <button
-              type="button"
-              class="flex items-center justify-between w-full py-4 text-left font-semibold border-b border-bg-main text-white bg-transparent aria-expanded:bg-transparent gap-3"
-              data-accordion-target="#about-body"
-              aria-expanded="false"
-              aria-controls="about-body"
-            >
-              <span>About Us</span>
-              <svg
-                data-accordion-icon
-                class="w-3 h-3 shrink-0"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5 5 1 1 5"
-                />
-              </svg>
-            </button>
-          </h2>
-          <div id="about-body" class="hidden">
-            <ul class="mt-2 space-y-2 text-white">
-              <li><a href="#" class="hover:text-white">FAQ</a></li>
-              <li><a href="#" class="hover:text-white">Contact</a></li>
-              <li><a href="#" class="hover:text-white">Returns</a></li>
-              <li><a href="#" class="hover:text-white">Blog</a></li>
-              <li><a href="#" class="hover:text-white">Shipping</a></li>
-            </ul>
-          </div>
-
-          <!-- Customer Support -->
-          <h2>
-            <button
-              type="button"
-              class="flex items-center justify-between w-full py-4 text-left font-semibold border-b border-bg-main text-white bg-transparent aria-expanded:bg-transparent gap-3"
-              data-accordion-target="#support-body"
-              aria-expanded="false"
-              aria-controls="support-body"
-            >
-              <span>Customer Support</span>
-              <svg
-                data-accordion-icon
-                class="w-3 h-3 shrink-0"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5 5 1 1 5"
-                />
-              </svg>
-            </button>
-          </h2>
-          <div id="support-body" class="hidden">
-            <ul class="mt-2 space-y-2 text-white">
-              <li><a href="#" class="hover:text-white">Affiliates</a></li>
-              <li>
-                <a href="#" class="hover:text-white">Apple Pay Payments</a>
-              </li>
-              <li><a href="#" class="hover:text-white">Returns</a></li>
-              <li><a href="#" class="hover:text-white">Returns Policy</a></li>
-              <li><a href="#" class="hover:text-white">Returns</a></li>
-            </ul>
-          </div>
-
-          <!-- Follow Us -->
-          <h2>
-            <button
-              type="button"
-              class="flex items-center justify-between w-full py-4 text-left font-semibold border-b border-bg-main text-white bg-transparent aria-expanded:bg-transparent gap-3"
-              data-accordion-target="#social-body"
-              aria-expanded="false"
-              aria-controls="social-body"
-            >
-              <span>Follow Us</span>
-              <svg
-                data-accordion-icon
-                class="w-3 h-3 shrink-0"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5 5 1 1 5"
-                />
-              </svg>
-            </button>
-          </h2>
-          <div id="social-body" class="hidden">
-            <ul class="mt-4 space-y-2 text-white">
-              <li class="flex items-center gap-3 py-2 pt-0">
-                <i class="fab fa-facebook"></i>
-                <a href="#" class="hover:text-white">Facebook</a>
-              </li>
-              <li class="flex items-center gap-3 py-2">
-                <i class="fab fa-instagram"></i>
-                <a href="#" class="hover:text-white">Instagram</a>
-              </li>
-              <li class="flex items-center gap-3 py-2">
-                <i class="fab fa-twitter"></i>
-                <a href="#" class="hover:text-white">Twitter</a>
-              </li>
-              <li class="flex items-center gap-3 py-2">
-                <i class="fab fa-linkedin"></i>
-                <a href="#" class="hover:text-white">LinkedIn</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <!-- About Us -->
+      <div class="flex flex-col">
+        <h3 class="text-base font-semibold text-white">About Us</h3>
+        <ul class="mt-4 space-y-3">
+          <li><a href="#" class="hover:text-white">FAQ</a></li>
+          <li><a href="#" class="hover:text-white">Contact</a></li>
+          <li><a href="#" class="hover:text-white">Returns</a></li>
+          <li><a href="#" class="hover:text-white">Blog</a></li>
+          <li><a href="#" class="hover:text-white">Shipping</a></li>
+        </ul>
       </div>
 
-      <!-- Static Columns (DESKTOP >=1024px) -->
-      <div class="hidden lg:flex flex-wrap gap-10 xl:gap-0 col-span-3">
-        <!-- About Us -->
-        <div class="flex flex-col flex-1">
-          <h3 class="text-base font-semibold text-white md:text-lg">
-            About Us
-          </h3>
-          <ul class="mt-4 space-y-3">
-            <li><a href="#" class="hover:text-white">FAQ</a></li>
-            <li><a href="#" class="hover:text-white">Contact</a></li>
-            <li><a href="#" class="hover:text-white">Returns</a></li>
-            <li><a href="#" class="hover:text-white">Blog</a></li>
-            <li><a href="#" class="hover:text-white">Shipping</a></li>
-          </ul>
-        </div>
-        <!-- Customer Support -->
-        <div class="flex flex-col flex-1">
-          <h3 class="text-base font-semibold text-white md:text-lg">
-            Customer Support
-          </h3>
-          <ul class="mt-4 space-y-3">
-            <li><a href="#" class="hover:text-white">Affiliates</a></li>
-            <li><a href="#" class="hover:text-white">Apple Pay Payments</a></li>
-            <li><a href="#" class="hover:text-white">Returns</a></li>
-            <li><a href="#" class="hover:text-white">Returns Policy</a></li>
-            <li><a href="#" class="hover:text-white">Returns</a></li>
-          </ul>
-        </div>
-        <!-- Follow Us -->
-        <div class="flex flex-col flex-1">
-          <h3 class="text-base font-semibold text-white md:text-lg">
-            Follow Us
-          </h3>
-          <ul class="mt-4">
-            <li class="flex items-center gap-3 py-2 pt-0">
-              <i class="fab fa-facebook"></i>
-              <a href="#" class="hover:text-white">Facebook</a>
-            </li>
-            <li class="flex items-center gap-3 py-2">
-              <i class="fab fa-instagram"></i>
-              <a href="#" class="hover:text-white">Instagram</a>
-            </li>
-            <li class="flex items-center gap-3 py-2">
-              <i class="fab fa-twitter"></i>
-              <a href="#" class="hover:text-white">Twitter</a>
-            </li>
-            <li class="flex items-center gap-3 py-2">
-              <i class="fab fa-linkedin"></i>
-              <a href="#" class="hover:text-white">LinkedIn</a>
-            </li>
-          </ul>
-        </div>
+      <!-- Customer Support -->
+      <div class="flex flex-col">
+        <h3 class="text-base font-semibold text-white">Customer Support</h3>
+        <ul class="mt-4 space-y-3">
+          <li><a href="#" class="hover:text-white">Affiliates</a></li>
+          <li><a href="#" class="hover:text-white">Apple Pay Payments</a></li>
+          <li><a href="#" class="hover:text-white">Returns</a></li>
+          <li><a href="#" class="hover:text-white">Returns Policy</a></li>
+          <li><a href="#" class="hover:text-white">Returns</a></li>
+        </ul>
+      </div>
+
+      <!-- Social Links -->
+      <div class="flex flex-col">
+        <h3 class="text-base font-semibold text-white">Follow Us</h3>
+        <ul class="mt-4">
+          <li class="flex items-center gap-3 py-2 pt-0">
+            <i class="fab fa-facebook"></i>
+            <a href="#" class="hover:text-white">Facebook</a>
+          </li>
+          <li class="flex items-center gap-3 py-2">
+            <i class="fab fa-instagram"></i>
+            <a href="#" class="hover:text-white">Instagram</a>
+          </li>
+          <li class="flex items-center gap-3 py-2">
+            <i class="fab fa-twitter"></i>
+            <a href="#" class="hover:text-white">Twitter</a>
+          </li>
+          <li class="flex items-center gap-3 py-2">
+            <i class="fab fa-linkedin"></i>
+            <a href="#" class="hover:text-white">LinkedIn</a>
+          </li>
+        </ul>
       </div>
     </div>
 
     <!-- Bottom Bar -->
-    <div
-      class="flex flex-wrap items-center mt-10 text-xs justify-center sm:justify-between text-center sm:text-left"
-    >
-      <p class="basis-full sm:basis-auto">
-        © 2025 Trendify. All rights reserved.
-      </p>
-      <div class="flex gap-8 mt-3 sm:mt-0 justify-center sm:justify-start">
+    <div class="flex flex-row justify-between items-center mt-10 text-xs">
+      <p>© 2025 Trendify. All rights reserved.</p>
+      <div class="flex gap-8 mt-3 md:mt-0">
         <a href="#" class="hover:text-white">Privacy Policy</a>
         <a href="#" class="hover:text-white">Terms of Service</a>
         <a href="#" class="hover:text-white">Cookies Settings</a>
