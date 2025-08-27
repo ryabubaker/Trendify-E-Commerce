@@ -26,15 +26,6 @@
   body {
     @apply bg-bg-main font-poppins;
   }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-hedvig text-main;
-  }
 }
 
 @layer components {
@@ -53,9 +44,10 @@
 
 @layer utilities {
   .custom-container {
-    @apply px-5 md:px-0 md:container m-auto;
+    @apply w-full max-w-[1440px] px-[10px] min-[750px]:px-[50px] xl:px-[100px] mx-auto;
   }
 }
+
 
 swiper-container {
   --swiper-pagination-color: var(--color-main);

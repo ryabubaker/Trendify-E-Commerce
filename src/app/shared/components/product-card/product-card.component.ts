@@ -8,7 +8,7 @@ import { Product } from '../../../core/models/product.model';
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent {
-  @Input() product!: Product;
+  @Input({ required: true }) product: Product = {} as Product;
 
   calculateDiscount(originalPrice: number, discountedPrice: number): number {
     return Math.round(

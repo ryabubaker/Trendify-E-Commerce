@@ -1,6 +1,9 @@
-<div class="card bg-white rounded-lg shadow-md p-2 flex flex-col">
+<div
+  class="card relative flex flex-col w-full aspect-[72%] min-h-[250px] max-h-[320px] sm:max-h-[365px] md:max-h-[390px] lg:max-h-[409px] rounded-[12px] shadow-md bg-white overflow-hidden"
+>
+  <!-- Image -->
   <div
-    class="product-img h-[250px] relative overflow-hidden  rounded-lg bg-bg-main"
+    class="relative w-full h-[60%] overflow-hidden rounded-t-[12px] bg-bg-main"
   >
     <img
       [src]="product.imageCover"
@@ -8,40 +11,58 @@
       class="w-full h-full object-contain"
     />
 
+    <!-- Discount badge -->
     @if (product.priceAfterDiscount) {
     <div
-      class="absolute bottom-2 left-2 bg-main text-white text-md font-semibold px-2 py-1 rounded"
+      class="absolute bottom-2 left-2 bg-main text-white font-semibold rounded flex items-center justify-center 
+             text-[10px] px-2 py-1 
+             sm:text-xs sm:px-2.5 
+             md:text-sm md:px-3 
+             lg:text-base"
     >
       -{{ calculateDiscount(product.price, product.priceAfterDiscount) }}%
     </div>
     }
 
-    <div class="likeBtn drop-shadow-[0_0_5.66px_rgba(0,0,0,0.1)] bg-white text-main text-xl size-9 flex justify-center items-center absolute top-2 right-2 rounded-full">
+    <!-- Like button -->
+    <div
+      class="likeBtn drop-shadow-[0_0_5.66px_rgba(0,0,0,0.1)] bg-white text-main text-sm sm:text-lg md:text-xl size-7 sm:size-8 md:size-9 flex justify-center items-center absolute top-2 right-2 rounded-full"
+    >
       <i class="far fa-heart"></i>
     </div>
   </div>
 
-  <div class="product-details mt-3 flex-1 relative">
-    <p class="text-lg font-medium text-text">{{ product.title}}</p>
-    <div class="mb-1">
-      <span class="text-text text-md font-medium">
-        <i class="fas fa-star size-4 text-review"></i>
-        {{ product.ratingsAverage }}
+  <!-- Content -->
+  <div class="product-details flex flex-col flex-1 p-3 relative">
+    <!-- Title -->
+    <p class="text-sm sm:text-base md:text-lg lg:text-xl font-medium text-text line-clamp-1">
+      {{ product.title }}
+    </p>
+
+    <!-- Rating -->
+    <div class="flex items-center mt-1">
+      <i class="fas fa-star text-main mr-1 text-xs sm:text-sm"></i>
+      <span class="text-sm sm:text-base font-medium">{{ product.ratingsAverage }}</span>
+      <span class="text-xs sm:text-sm text-grey-2 ml-1">
+        ({{ product.ratingsQuantity }}+)
       </span>
-      <span class="text-grey-2 ml-1 text-xs font-medium"
-        >({{ product.ratingsQuantity }} reviews)</span
-      >
     </div>
-    <p class="text-main font-semibold text-md">
-      {{ product.priceAfterDiscount || product.price }} EGP @if
-      (product.priceAfterDiscount) {
-      <span class="text-grey-2 line-through ml-1">{{ product.price }} EGP</span>
+
+    <!-- Price -->
+    <p class="text-main text-base sm:text-lg md:text-xl font-semibold">
+      {{ product.priceAfterDiscount || product.price }} EGP
+      @if (product.priceAfterDiscount) {
+      <span class="text-grey-2 line-through ml-1 text-xs sm:text-sm">
+        {{ product.price }} EGP
+      </span>
       }
     </p>
+
+    <!-- Add to cart -->
     <button
-      class="addToCart absolute bottom-0 right-0 bg-main text-white rounded-[10px] size-8 flex items-center justify-center drop-shadow-[0_0_48px_rgba(0,0,0,0.8)] hover:bg-main/90 transition"
+      class="addToCart absolute bottom-2 right-2 bg-main text-white rounded-[10px] size-7 sm:size-8 md:size-9 max-[425px]:size-6 flex items-center justify-center drop-shadow-[0_0_48px_rgba(0,0,0,0.8)] hover:bg-main/90 transition"
     >
-      <i class="fas fa-plus"></i>
+      <i class="fas fa-plus text-xs sm:text-sm md:text-base"></i>
     </button>
   </div>
 </div>
