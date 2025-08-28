@@ -2,42 +2,82 @@
   <!-- Left: Form -->
   <div class="flex items-center justify-center px-8 py-12 col-span-1">
     <div class="w-full max-w-md">
-      <h2 class="text-3xl font-semibold text-text font-poppins">
-        Welcome Back!
-      </h2>
+      <h2 class="text-3xl font-semibold text-text">Welcome Back!</h2>
       <p class="mt-2 text-grey-2">
         Please login or sign up to continue our app
       </p>
 
-      <form class="mt-6 space-y-4">
+      <!-- Error message container -->
+      @if (msgError) {
+      <div
+        class="flex items-center gap-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md shadow-sm mb-6 mt-1"
+        role="alert"
+      >
+        <svg
+          class="w-5 h-5 flex-shrink-0"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span class="text-sm font-semibold">{{ msgError }}</span>
+      </div>
+      }
+
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="submitForm()"
+        class="mt-6 space-y-4"
+      >
         <!-- Email -->
+        @let email = loginForm.get('email');
         <div>
-          <label class="block text-base font-medium text-text mb-2"
-            >E-mail</label
+          <label for="email" class="block font-medium text-text mb-2"
+            >Email</label
           >
           <div class="relative">
             <input
+              formControlName="email"
               type="email"
               placeholder="Ahmed@gmail.com"
               class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
+              [class.border-0]="!(email?.invalid && email?.touched)"
+              [class.border]="email?.invalid && email?.touched"
+              [class.border-red-500]="email?.invalid && email?.touched"
             />
             <span
               class="absolute start-0 top-1/2 translate-x-1/2 -translate-y-1/2"
               ><i class="far fa-envelope text-main"></i
             ></span>
           </div>
+          @if (email?.invalid && email?.touched) {
+          <p class="text-red-500 text-sm mt-1">Enter a valid email.</p>
+          }
         </div>
 
         <!-- Password -->
+        @let password = loginForm.get('password');
         <div>
-          <label class="block text-base font-medium text-text mb-2"
+          <label for="password" class="block font-medium text-text mb-2"
             >Password</label
           >
           <div class="relative">
             <input
-              type="password"
+              formControlName="password"
+              [type]="showPassword ? 'text' : 'password'"
               placeholder="xxxxxxxxxxxx"
               class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
+              [class.border-0]="!(password?.invalid && password?.touched)"
+              [class.border]="password?.invalid && password?.touched"
+              [class.border-red-500]="password?.invalid && password?.touched"
             />
             <span
               class="absolute start-0 top-1/2 translate-x-1/2 -translate-y-1/2 text-main"
@@ -46,13 +86,20 @@
             </span>
             <span
               class="absolute inset-y-0 right-3 flex items-center text-main cursor-pointer"
+              (click)="togglePasswordVisibility()"
             >
-              <i class="fa fa-eye-slash"></i>
+              <i [ngClass]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
             </span>
           </div>
+
+          @if (password?.invalid && password?.touched) {
+          <p class="text-red-500 text-sm mt-1">
+            Password must be at least 6 characters.
+          </p>
+          }
         </div>
 
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-6 pt-2">
           <!-- Remember Me -->
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -71,22 +118,45 @@
           <!-- Button -->
           <button
             type="submit"
-            class="w-full rounded-full bg-main hover:bg-[#A97342] px-4 py-3 text-white font-medium hover:bg-brown-700 transition"
+            class="w-full rounded-full bg-main hover:bg-[#A97342] px-4 py-3 text-white font-medium disabled:opacity-50 transition flex items-center justify-center gap-2"
           >
-            Log in
+            @if(isLoading) {
+            <svg
+              class="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              ></path>
+            </svg>
+            } @if(!isLoading){<span>Log In</span>}
+            @if(isLoading){<span>Loading...</span>}
           </button>
+
           <p class="text-grey-2 text-center text-sm">Or Continue With</p>
         </div>
 
         <!-- Socials -->
-        <div class="flex justify-center gap-6">
+        <div class="flex justify-center gap-6 mt-2">
           <button class="text-2xl"><i class="fab fa-google"></i></button>
           <button class="text-2xl"><i class="fab fa-facebook"></i></button>
           <button class="text-2xl"><i class="fab fa-apple"></i></button>
         </div>
 
         <!-- Don't Have An Account -->
-        <p class="text-center font-medium text-grey-2 mt-3">
+        <p class="text-center font-medium text-grey-2 mt-4">
           Don't have an account?
           <a routerLink="/register" class="text-main underline">Sign up.</a>
         </p>
@@ -95,7 +165,9 @@
   </div>
 
   <!-- Right: Image Section -->
-  <div class="relative hidden lg:flex items-center justify-center h-full overflow-hidden col-span-1">
+  <div
+    class="relative hidden lg:flex items-center justify-center h-full overflow-hidden col-span-1"
+  >
     <!-- Swiper -->
     <swiper-container
       class="mySwiper absolute inset-0"
@@ -130,14 +202,14 @@
     </swiper-container>
 
     <!-- Text Content -->
-    <div class="absolute z-50 bottom-40 left-[50%] transform -translate-x-1/2">
-      <h1
-        class="text-[32px] font-bold leading-[27px] text-white text-center font-poppins"
-      >
+    <div
+      class="absolute z-50 bottom-1/6 left-[50%] transform -translate-x-1/2 w-[405px]"
+    >
+      <h1 class="text-[32px] font-bold leading-[48px] text-white text-center">
         Welcome to Trendify
       </h1>
       <p
-        class="font-medium text-[20px] leading-[30px] text-white text-center mt-4"
+        class="font-medium text-[20px] leading-[30px] text-white text-center mt-1"
       >
         Discover the latest trends, express your unique style
       </p>
