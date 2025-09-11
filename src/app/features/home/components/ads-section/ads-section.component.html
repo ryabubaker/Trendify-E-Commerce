@@ -1,0 +1,59 @@
+<section class="relative home-slider-owl">
+  <owl-carousel-o #adsCarousel [options]="adsOptions" class="w-full">
+    @for (img of imgs; track $index) {
+    <ng-template carouselSlide>
+      <div class="h-[500px] relative w-full">
+        <img
+          class="w-full h-full object-cover"
+          [src]="img"
+          alt="image"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent z-10 pointer-events-none"
+        ></div>
+      </div>
+    </ng-template>
+    }
+  </owl-carousel-o>
+
+  <!-- Overlay container -->
+  <div
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[1340px] w-full z-30 flex items-center justify-between gap-8 px-4"
+  >
+    <!-- Left button -->
+    <div
+      (click)="prevSlide()"
+      class="btn-slider cursor-pointer hover:bg-main group md:flex hidden items-center justify-center w-[40px] h-[40px] rounded-full border border-main pointer-events-auto shrink-0"
+    >
+      <i
+        class="group-hover:text-white fa-solid fa-chevron-left text-lg text-main"
+      ></i>
+    </div>
+
+    <!-- Content  -->
+    <div class="flex-1">
+      <p class="font-semibold text-[44px] text-white">Upgrade your Style</p>
+      <p class="font-medium text-[32px] text-white">
+        Up to 50% off on all <br />
+        clothing and accessories!
+      </p>
+      <div class="pt-6">
+        <button
+          class="w-[168px] h-[48px] text-[20px] rounded bg-main font-medium text-white"
+        >
+          Shop Now
+        </button>
+      </div>
+    </div>
+
+    <!-- Right button -->
+    <div
+      (click)="nextSlide()"
+      class="btn-slider cursor-pointer hover:bg-main group md:flex hidden items-center justify-center w-[40px] h-[40px] rounded-full border border-main pointer-events-auto shrink-0"
+    >
+      <i
+        class="group-hover:text-white fa-solid fa-chevron-right text-lg text-main"
+      ></i>
+    </div>
+  </div>
+</section>
