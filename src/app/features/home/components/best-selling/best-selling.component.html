@@ -1,0 +1,44 @@
+<section class="py-12">
+  <div class="section-title mb-5">
+    <h2>Products</h2>
+    <p>Best Selling Products</p>
+  </div>
+
+  <div class="mb-5 text-center">
+    <ul
+      class="inline-flex me-0 bg-[#eee] text-sm font-medium text-center rounded-full p-2"
+      role="tablist"
+    >
+      @for (tab of tabs; track $index) {
+      <li class=" " role="presentation">
+        <button
+          class=" px-6 py-2"
+          [ngClass]="{
+            'text-white bg-main rounded-full active': activeTab === tab.id,
+            'text-grey-2 ':
+              activeTab !== tab.id
+          }"
+          type="button"
+          (click)="filterByCategory(tab.id)"
+        >
+          {{ tab.title }}
+        </button>
+      </li>
+      }
+    </ul>
+  </div>
+
+  <!-- Products Grid -->
+  <div
+    class="custom-container grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 mt-10 justify-items-center"
+  >
+    @for (p of products; track p) {
+    <app-product-card [product]="p"></app-product-card>
+    }
+  </div>
+  <div class="text-center mt-8">
+    <button class="btn">
+      <span class="mr-2">See All</span> <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
+</section>
