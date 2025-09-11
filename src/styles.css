@@ -5,6 +5,9 @@
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
 
+/* Import feature-specific Tailwind layers */
+@import "./app/features/home/home.styles.css";
+
 @theme {
   /* Colors */
   --color-main: #8b5e35;
@@ -28,23 +31,22 @@
   }
 }
 
-@layer components {
-  .section-title {
-    @apply text-center;
-  }
-
-  .section-title h2 {
-    @apply text-2xl lg:text-3xl;
-  }
-
-  .section-title p {
-    @apply mt-1 capitalize text-text font-semibold text-3xl lg:text-[40px];
-  }
-}
-
 @layer utilities {
+ 
   .custom-container {
-    @apply w-full max-w-[1440px] px-[10px] min-[750px]:px-[50px] xl:px-[100px] mx-auto;
+    @apply w-full mx-auto px-4;
+
+    @apply md:px-6;
+
+    @apply lg:px-8;
+
+    @apply xl:px-4;
+
+    @apply max-w-[1400px];
+  }
+
+  .btn {
+    @apply border border-main text-main px-4 py-2 rounded-full cursor-pointer hover:bg-main hover:text-white;
   }
 }
 
