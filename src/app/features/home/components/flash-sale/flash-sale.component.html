@@ -1,0 +1,20 @@
+<section class="py-12">
+  <div class="section-title">
+    <h2>Flash Sale</h2>
+    <p>Grab them before they're gone</p>
+  </div>
+  <div
+    class="custom-container grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4  mt-10 justify-items-center"
+  >
+    @for (p of discountedProducts; track p) {
+    <app-product-card [product]="p"></app-product-card>
+    }
+  </div>
+  <div class="text-center mt-8">
+    <button
+      class="btn"
+    >
+      <span class="mr-2">See All</span> <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
+</section>
