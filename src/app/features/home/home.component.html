@@ -1,20 +1,45 @@
-<section class="py-12">
-  <div class="section-title">
-    <h2>Flash Sale</h2>
-    <p>Grab them before they're gone</p>
-  </div>
-  <div
-    class="custom-container grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4  mt-10 justify-items-center"
-  >
-    @for (p of discountedProducts; track p) {
-    <app-product-card [product]="p"></app-product-card>
-    }
-  </div>
-  <div class="text-center mt-8">
-    <button
-      class="border border-main text-main px-4 py-2 rounded-full cursor-pointer hover:bg-main/90 hover:text-white"
+<section>
+  <app-home-hero></app-home-hero>
+
+  <app-categories-slider></app-categories-slider>
+
+  <app-ads-section></app-ads-section>
+
+  <app-flash-sale></app-flash-sale>
+
+  <app-new-collection></app-new-collection>
+
+  <app-best-selling></app-best-selling>
+
+  <app-top-products></app-top-products>
+
+  <!-- Banner -->
+  <section class="banner h-[40vh] flex items-center">
+    <div
+      class="custom-container text-white text-center flex flex-col justify-center items-center gap-3"
     >
-      <span class="mr-2">See All</span> <i class="fas fa-arrow-right"></i>
-    </button>
-  </div>
+      <div class="banner-content">
+        <h2 class="font-bold text-2xl mb-2">
+          Discover Fashion That Speaks To You.
+        </h2>
+        <p class="font-medium">
+          Explore a range of high-quality, affordable furniture designed to
+          transform any room. Discover the perfect blend of style, comfort, and
+          functionality for your space.
+        </p>
+      </div>
+      <div class="banner-btn">
+        <button
+          class="rounded-full border border-white px-4 py-2 cursor-pointer hover:border-main hover:bg-main"
+        >
+          See More
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <app-home-services></app-home-services>
+
+  <app-testimonial></app-testimonial>
+  
 </section>

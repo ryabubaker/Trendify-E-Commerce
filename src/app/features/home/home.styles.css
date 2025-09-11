@@ -1,0 +1,65 @@
+@layer components {
+  .section-title {
+    @apply text-center;
+  }
+
+  .section-title h2 {
+    @apply text-main font-hedvig text-xl lg:text-2xl;
+  }
+
+  .section-title p {
+    @apply mt-1 capitalize text-text font-semibold text-2xl lg:text-3xl;
+  }
+}
+
+/* Card Style */
+.service-card {
+  width: 100%;
+  height: 260px;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.service-card .icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  background-color: var(--color-bg-main);
+  text-align: center;
+  line-height: 50px;
+}
+
+.service-card .icon.backtick{
+  background-color: white ;
+}
+
+.service-card .icon i {
+  font-size: 1.5rem;
+  color: var(--color-main);
+  vertical-align: middle; 
+}
+
+.service-card h3 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--color-text);
+  margin-top: 0.5rem;
+}
+
+.service-card p {
+  color: var(--color-grey-2); 
+  margin-top: 0.8rem; 
+}
+
+/* carousel style */
+.owl-theme .owl-dots .owl-dot.active span {
+  background: var(--color-main) !important;
+}
+
+.owl-theme .owl-dots .owl-dot span {
+  background-color: var(--color-grey-2) !important;
+}

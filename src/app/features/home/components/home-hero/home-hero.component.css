@@ -1,0 +1,79 @@
+@media screen and (max-width: 770px) {
+  .img-arrow {
+    max-width: 60%;
+  }
+  .content {
+    left: 30%;
+  }
+}
+@media screen and (min-width: 768px) {
+  .content {
+    left: 62%;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .beati-img {
+    width: 35%;
+  }
+  .img-arrow {
+    max-width: 73%;
+  }
+
+  .content {
+    left: 16%;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .beati-img {
+    width: 28%;
+  }
+  .img-arrow {
+    max-width: 80%;
+  }
+
+  .content {
+    left: 12%;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .img-arrow {
+    max-width: 80%;
+  }
+  .content {
+    left: 30% !important;
+  }
+}
+
+@media screen and (max-width: 1286px) {
+  .btn-slider-1 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .content-home {
+    text-align: left;
+  }
+  .spicial-1 div {
+    width: 40%;
+  }
+  .spicial-2 {
+    left: 10px !important;
+  }
+
+  .img-arrow {
+    max-width: 90%;
+  }
+  .content {
+    left: 30%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .img-arrow {
+    max-width: 90%;
+  }
+  .content {
+    left: 35%;
+  }
+}

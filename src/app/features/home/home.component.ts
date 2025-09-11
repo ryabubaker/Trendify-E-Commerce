@@ -1,38 +1,28 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Product } from '../../core/models/product.model';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import { ProductsService } from '../../core/services/products/products.service';
+import { Component } from '@angular/core';
+import { HomeHeroComponent } from './components/home-hero/home-hero.component';
+import { FlashSaleComponent } from './components/flash-sale/flash-sale.component';
+import { CategoriesSliderComponent } from './components/categories-slider/categories-slider.component';
+import { AdsSectionComponent } from './components/ads-section/ads-section.component';
+import { NewCollectionComponent } from './components/new-collection/new-collection.component';
+import { HomeServicesComponent } from "./components/home-services/home-services.component";
+import { TopProductsComponent } from "./components/top-products/top-products.component";
+import { BestSellingComponent } from "./components/best-selling/best-selling.component";
+import { TestimonialComponent } from "./components/testimonial/testimonial.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  imports: [ProductCardComponent],
+  styleUrl: './home.component.css',
+  imports: [
+    HomeHeroComponent,
+    FlashSaleComponent,
+    CategoriesSliderComponent,
+    AdsSectionComponent,
+    NewCollectionComponent,
+    HomeServicesComponent,
+    TopProductsComponent,
+    BestSellingComponent,
+    TestimonialComponent
+],
 })
-export class HomeComponent implements OnInit {
-  private readonly productsService = inject(ProductsService);
-  productList: Product[] = [];
-
-  ngOnInit(): void {
-    this.getAllProductsData();
-    console.log(this.discountedProducts)
-  }
-
-  getAllProductsData(): void {
-    this.productsService.getAllProducts().subscribe({
-      next: (response) => {
-        this.productList = response.data;
-      },
-      error: (error) => {
-        console.error('Error fetching products:', error);
-      },
-    });
-  }
-
-  get discountedProducts() {
-    return this.productList
-      .filter((p) => (p.priceAfterDiscount ?? 0) > 0) 
-      .slice(0, 4);
-  }
-
-  
-}
+export class HomeComponent {}
