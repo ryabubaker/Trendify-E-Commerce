@@ -1,6 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FlowbiteService } from './core/services/flowbite.service';
+import { PrimeNG } from 'primeng/config';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +8,11 @@ import { FlowbiteService } from './core/services/flowbite.service';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('app');
+     constructor(private primeng: PrimeNG) {}
+
+    ngOnInit() {
+        this.primeng.ripple.set(true);
+    }
 }

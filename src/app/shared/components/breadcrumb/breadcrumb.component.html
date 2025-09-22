@@ -1,0 +1,20 @@
+<div class="card flex justify-start breadcrumb">
+  <p-breadcrumb class="max-w-full" [model]="items">
+    <ng-template #item let-item>
+      @if (item.routerLink) {
+      <a
+        [routerLink]="item.routerLink"
+        class="p-breadcrumb-item-link px-1 md:px-0 py-2 text-white hover:opacity-80 transition duration-300"
+      >
+        <span class="text-main text-lg font-medium">
+          {{ item.label }}
+        </span>
+      </a>
+      } @else {
+      <span class="!text-text font-medium text-lg">
+        {{ item.label }}
+      </span>
+      }
+    </ng-template>
+  </p-breadcrumb>
+</div>

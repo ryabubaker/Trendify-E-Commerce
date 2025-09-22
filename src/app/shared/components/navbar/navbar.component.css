@@ -1,0 +1,33 @@
+.custom-menubar {
+  width: 100%;
+  background-color: var(--color-bg-main);
+  position: fixed;
+  gap: 1.5rem;
+  z-index: 50;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+  padding: 22px 10px;
+  display: flex;
+  align-items: center;
+  --p-menubar-border-radius: 0;
+}
+
+.custom-menubar .p-menubar-start {
+  margin-right: auto;
+}
+
+.custom-menubar .p-menubar-root-list {
+  flex: 1;
+  justify-content: center;
+  border-radius:0 0 6px 6px;
+}
+
+.custom-right-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.custom-right-wrapper .p-menubar-button {
+  order: -1; 
+}

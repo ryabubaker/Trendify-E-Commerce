@@ -1,18 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FlowbiteService } from '../../../core/services/flowbite.service';
-import { initFlowbite } from 'flowbite';
+import { Component } from '@angular/core';
+import { AccordionModule } from 'primeng/accordion';
+
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  imports: [AccordionModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css',
 })
-export class FooterComponent implements OnInit {
-  private readonly flowbiteService = inject(FlowbiteService);
-  ngOnInit(): void {
-    this.flowbiteService.loadFlowbite((flowbite) => {
-      initFlowbite();
-    });
-  }
-}
+export class FooterComponent {}

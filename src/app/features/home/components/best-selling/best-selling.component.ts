@@ -1,33 +1,39 @@
+// best-selling.component.ts
 import { ProductsService } from './../../../../core/services/products/products.service';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CategoriesService } from '../../../../core/services/categories/categories.service';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
+import { Product } from '../../../../core/models/product.model';
+
+// Define an interface for the tabs for better type safety
+interface Tab {
+  title: string;
+  id: string;
+}
 
 @Component({
   selector: 'app-best-selling',
+  standalone: true, // Assuming this is a standalone component
   imports: [CommonModule, ProductCardComponent],
   templateUrl: './best-selling.component.html',
-  styleUrl: './best-selling.component.css',
+  styleUrls: ['./best-selling.component.css'],
 })
-export class BestSellingComponent {
+export class BestSellingComponent implements OnInit {
   private readonly categoryService = inject(CategoriesService);
   private readonly productsService = inject(ProductsService);
 
-  tabs: { title: string; id: string }[] = [];
+  tabs: Tab[] = [];
+  products: Product[] = [];
   activeTab: string = 'all';
 
-  productsByCategory: { [key: string]: any[] } = {};
-
-  get products() {
-    return this.productsByCategory[this.activeTab] || [];
-  }
+  private productsCache: { [key: string]: Product[] } = {};
 
   ngOnInit() {
-    this.loadCategoriesAndProducts();
+    this.loadCategoriesAndInitialProducts();
   }
 
-  loadCategoriesAndProducts() {
+  loadCategoriesAndInitialProducts(): void {
     this.categoryService.getAllCategories().subscribe({
       next: (res) => {
         const allowed = ["Men's Fashion", "Women's Fashion", 'Electronics'];
@@ -36,42 +42,47 @@ export class BestSellingComponent {
           { title: 'All', id: 'all' },
           ...res.data
             .filter((c: any) => allowed.includes(c.name))
-            .map((c: any) => ({
-              title: c.name,
-              id: c._id,
-            })),
+            .map((c: any) => ({ title: c.name, id: c._id })),
         ];
 
-        // Prefetch products only if not already cached
-        this.tabs.forEach((tab) => {
-          if (!this.productsByCategory[tab.id]) {
-            this.fetchProducts(tab.id);
-          }
-        });
-
-        console.log(this.productsByCategory);
+        this.fetchProducts(this.activeTab);
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error('Error loading categories:', err);
+      },
     });
   }
 
-  fetchProducts(categoryId: string) {
-    const params =
-      categoryId === 'all'
-        ? { limit: 4, sort: '-sold' }
-        : { limit: 4, sort: '-sold', 'category[in]': categoryId };
-
-    this.productsService.getProducts(params).subscribe((res) => {
-      this.productsByCategory[categoryId] = res.data;
-    });
-  }
-
-  filterByCategory(categoryId: string) {
-    this.activeTab = categoryId;
-
-    // Optional: lazy-load if category not fetched yet
-    if (!this.productsByCategory[categoryId]) {
-      this.fetchProducts(categoryId);
+  fetchProducts(categoryId: string): void {
+    if (this.productsCache[categoryId]) {
+      this.products = this.productsCache[categoryId];
+      return;
     }
+    
+    const params: Record<string, string | number> = {
+      limit: 4,
+      sort: '-sold',
+    };
+
+    if (categoryId !== 'all') {
+      params['category[in]'] = categoryId;
+    }
+
+    this.productsService.getProducts(params).subscribe({
+      next: (res) => {
+        const fetchedProducts = res.data;
+        this.products = fetchedProducts;
+        this.productsCache[categoryId] = fetchedProducts;
+      },
+      error: (err) => {
+        console.error(`Error fetching products for category ${categoryId}:`, err);
+        this.products = [];
+      },
+    });
+  }
+
+  filterByCategory(categoryId: string): void {
+    this.activeTab = categoryId;
+    this.fetchProducts(categoryId);
   }
 }

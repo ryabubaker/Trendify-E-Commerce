@@ -1,0 +1,29 @@
+.paginator .p-menu-list {
+  background-color: white;
+  border-radius: 1rem;
+  margin-top: 5px;
+}
+
+.paginator .p-select {
+  display: none;
+}
+
+.paginator .p-paginator-first,
+.paginator .p-paginator-last {
+  display: none;
+}
+
+.paginator .p-icon {
+  --p-icon-size: 2rem;
+  color: var(--color-main);
+}
+.paginator .p-paginator-page {
+  border-radius: 50%;
+}
+
+.paginator .p-paginator-page.p-paginator-page-selected {
+  background-color: var(--color-main);
+  color: white;
+}
+
+

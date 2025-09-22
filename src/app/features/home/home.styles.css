@@ -1,17 +1,3 @@
-@layer components {
-  .section-title {
-    @apply text-center;
-  }
-
-  .section-title h2 {
-    @apply text-main font-hedvig text-xl lg:text-2xl;
-  }
-
-  .section-title p {
-    @apply mt-1 capitalize text-text font-semibold text-2xl lg:text-3xl;
-  }
-}
-
 /* Card Style */
 .service-card {
   width: 100%;
@@ -55,7 +41,6 @@
   margin-top: 0.8rem; 
 }
 
-/* carousel style */
 .owl-theme .owl-dots .owl-dot.active span {
   background: var(--color-main) !important;
 }

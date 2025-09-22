@@ -1,0 +1,195 @@
+<section class="mt-36 mb-20 custom-container">
+  <app-breadcrumb></app-breadcrumb>
+  <div class="category-top section-title mb-8">
+    <h2>Categories</h2>
+    <p>Full Outfit</p>
+  </div>
+  <div class="category-bottom mt-[34px] w-full sm:flex sm:justify-between">
+    <p-drawer
+      [(visible)]="visible"
+      position="left"
+      [styleClass]="
+        'p-drawer-headless !w-full !max-w-xs sm:!max-w-sm md:!hidden'
+      "
+    >
+      <ng-template #headless>
+        <aside class="w-full fixed top-0 left-0 h-full p-5 z-70 bg-white">
+          <div class="flex justify-between">
+            <h3 class="pb-8 text-text text-[20px] font-semibold">Filter By</h3>
+            <i
+              class="fa fa-close text-main block md:!hidden"
+              (click)="visible = false"
+            ></i>
+          </div>
+          <p-accordion [value]="['0']" [multiple]="true">
+            <p-accordion-panel value="0">
+              <p-accordion-header>
+                <div class="flex items-center justify-between w-full">
+                  <span class="text-text font-semibold text-[18px]"
+                    >Category</span
+                  >
+                </div>
+              </p-accordion-header>
+              <p-accordion-content>
+                <div class="mt-4">
+                  <div
+                    class="text-[#868484] font-medium mb-4 cursor-pointer hover:text-text"
+                    (click)="filterByCategory('all', 'All Products')"
+                    [class.text-text]="activeCategoryId === 'all'"
+                  >
+                    All Products
+                  </div>
+                  @for(cat of categories; track cat._id) {
+                  <div
+                    class="text-[#868484] font-medium mb-4 cursor-pointer hover:text-text"
+                    (click)="filterByCategory(cat._id, cat.name)"
+                    [class.text-text]="activeCategoryId === cat._id"
+                  >
+                    {{ cat.name }}
+                  </div>
+                  }
+                </div>
+              </p-accordion-content>
+            </p-accordion-panel>
+          </p-accordion>
+        </aside>
+      </ng-template>
+    </p-drawer>
+
+    <aside class="desktop-sidebar w-[70%] md:w-[30%] hidden md:block md:mr-9">
+      <div class="flex justify-between">
+        <h3 class="pb-8 text-text text-[20px] font-semibold">Filter By</h3>
+      </div>
+      <p-accordion [value]="['0']" [multiple]="true">
+        <p-accordion-panel value="0">
+          <p-accordion-header>
+            <div class="flex items-center justify-between w-full">
+              <span class="text-text font-semibold text-[18px]">Category</span>
+            </div>
+          </p-accordion-header>
+          <p-accordion-content>
+            <div class="mt-4">
+              <div
+                class="text-[#868484] font-medium mb-4 cursor-pointer hover:text-text"
+                (click)="filterByCategory('all', 'All Products')"
+                [class.text-text]="activeCategoryId === 'all'"
+              >
+                All Products
+              </div>
+              @for(cat of categories; track cat._id) {
+              <div
+                class="text-[#868484] font-medium mb-4 cursor-pointer hover:text-text"
+                (click)="filterByCategory(cat._id, cat.name)"
+                [class.text-text]="activeCategoryId === cat._id"
+              >
+                {{ cat.name }}
+              </div>
+              }
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+      </p-accordion>
+    </aside>
+    <div class="w-full md:w-[70%]">
+      <div
+        class="flex items-center justify-between w-full border-b border-gray-200 pb-4 mb-6"
+      >
+        <div class="flex items-center justify-start gap-2">
+          <button class="block md:hidden" (click)="visible = true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M20 7L4 7"
+                stroke="#090f41"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <path
+                d="M20 12L4 12"
+                stroke="#090f41"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <path
+                d="M20 17L4 17"
+                stroke="#090f41"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <h2
+            class="text-[20px] md:text-[30px] lg:text-[40px] font-semibold text-[#151411]"
+          >
+            {{ categoryName }}
+            <span class="!text-[16px] text-main">({{ productCount }})</span>
+          </h2>
+        </div>
+        <div class="sortby-btn flex flex-col align-items-center">
+          <!-- Trigger button -->
+          <button
+            type="button"
+            class="text-text font-medium flex items-center"
+            (click)="menu.toggle($event)"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="fa-solid fa-sort mr-2"></i>
+            Sorted By
+          </button>
+
+          <!-- PrimeNG Menu -->
+          <p-menu #menu [model]="sortBy" [popup]="true" appendTo="body">
+            <ng-template #item let-item>
+              <li
+                class="py-2 px-3 cursor-pointer rounded-lg hover:bg-gray-100 flex items-center"
+                [class.bg-gray-200]="filters.sort === item.sortKey"
+              >
+                <span [class]="item.icon + ' mr-2'"></span>
+                <span>{{ item.label }}</span>
+              </li>
+            </ng-template>
+          </p-menu>
+        </div>
+      </div>
+      @if (!dataDone) {
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 mt-10">
+        @for (i of [1,2,3,4,5,6,7,8,9,10,11,12]; track i) {
+        <app-product-card [loading]="true"></app-product-card>
+        }
+      </div>
+      } @else if (dataDone && products.length > 0) {
+      <div
+        #productGrid
+        class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 mt-10"
+      >
+        @for (p of products; track p._id) {
+        <app-product-card [loading]="false" [product]="p"></app-product-card>
+        }
+      </div>
+
+      <div class="paginator flex justify-center items-center gap-4 mt-10">
+        <p-paginator
+          [first]="((filters.page ?? 1) - 1) * (filters.limit ?? 12)"
+          [rows]="filters.limit"
+          [totalRecords]="productCount"
+          (onPageChange)="onPageChange($event)"
+        ></p-paginator>
+      </div>
+      } @else {
+      <div
+        class="text-center py-12 flex flex-col items-center justify-center text-gray-600"
+      >
+        <i class="fas fa-box-open text-6xl mb-4 text-gray-400"></i>
+        <h1 class="text-2xl font-semibold mb-2">No Products Available</h1>
+        <p class="text-md mb-4">Check back later!</p>
+        <i class="fas fa-search text-xl animate-bounce text-gray-400"></i>
+      </div>
+      }
+    </div>
+  </div>
+</section>

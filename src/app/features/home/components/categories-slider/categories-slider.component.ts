@@ -28,10 +28,10 @@ export class CategoriesSliderComponent implements OnInit, AfterViewInit {
   constructor() {
     window.addEventListener('resize', () => {
       this.reinitializeOwlCarousel();
-    });
+    }, {passive:true});
     window.addEventListener('load', () => {
       this.reinitializeOwlCarousel();
-    });
+    },{passive:true});
   }
 
   ngAfterViewInit() {

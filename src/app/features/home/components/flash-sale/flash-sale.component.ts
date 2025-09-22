@@ -18,7 +18,7 @@ export class FlashSaleComponent implements OnInit {
   }
 
   getAllProductsData(): void {
-    this.productsService.getAllProducts().subscribe({
+    this.productsService.getProducts().subscribe({
       next: (response) => {
         this.productList = response.data;
       },

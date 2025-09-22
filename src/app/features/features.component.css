@@ -1,0 +1,3 @@
+@import "./categories/categories.component.css";
+@import './../shared/components/navbar/navbar.component.css';
+@import './../shared/components/footer/footer.component.css';

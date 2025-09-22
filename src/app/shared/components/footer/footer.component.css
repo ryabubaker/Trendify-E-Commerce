@@ -1,0 +1,18 @@
+.footer-accordion {
+  --p-accordion-header-active-color: var(--color-main);
+  --p-accordion-header-color: white;
+  --p-accordion-header-hover-color: white;
+  --p-accordion-header-active-hover-color: none;
+}
+
+.footer-accordion .p-accordioncontent {
+  border-bottom: 1px solid white;
+}
+
+.footer-accordion .p-icon {
+  color: white;
+}
+.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader .p-icon{
+
+  color: var(--color-main);
+}

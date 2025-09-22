@@ -1,23 +1,44 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FlowbiteService } from '../../../core/services/flowbite.service';
-import { initFlowbite } from 'flowbite';
-import { RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { Menubar } from 'primeng/menubar';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  imports: [RouterLink, RouterLinkActive, Menubar],
 })
+export class NavbarComponent {
+  items: MenuItem[] | undefined;
 
-export class NavbarComponent implements OnInit {
-   private flowbiteService = inject(FlowbiteService);
-
-  ngOnInit(): void {
-    this.flowbiteService.loadFlowbite((flowbite) => {
-      initFlowbite();
-    });
+  ngOnInit() {
+    this.items = [
+      {
+        label: 'Home',
+        routerLink: '/home',
+        routerLinkActiveOptions: { exact: true },
+        styleClass: 'text-sm text-text-2 hover:text-main transition',
+      },
+      {
+        label: 'Services',
+        routerLink: '/services',
+        styleClass: 'text-sm text-text-2 hover:text-main transition',
+      },
+      {
+        label: 'Products',
+        routerLink: '/products',
+        styleClass: 'text-sm text-text-2 hover:text-main transition',
+      },
+      {
+        label: 'About Us',
+        routerLink: '/about',
+        styleClass: 'text-sm text-text-2 hover:text-main transition',
+      },
+      {
+        label: 'Contact Us',
+        routerLink: '/contact',
+        styleClass: 'text-sm text-text-2 hover:text-main transition',
+      },
+    ];
   }
-
-
 }
