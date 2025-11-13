@@ -1,0 +1,7 @@
+:host ::ng-deep .mySwiper {
+  height: 100%;
+}
+
+:host ::ng-deep .mySwiper swiper-slide {
+  height: 100%;
+}

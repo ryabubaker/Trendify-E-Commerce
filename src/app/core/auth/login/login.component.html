@@ -1,4 +1,4 @@
-<div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+<div class="h-screen grid grid-cols-1 lg:grid-cols-2">
   <!-- Left: Form -->
   <div class="flex items-center justify-center px-8 py-12 col-span-1">
     <div class="w-full max-w-md">
@@ -106,7 +106,9 @@
               <label class="text-sm text-text">Remember Me</label>
             </div>
 
-            <span class="text-main underline text-base font-medium"
+            <span
+            routerLink="/forgot"
+             class="cursor-pointer text-main underline text-base font-medium"
               >Forgot Password?
             </span>
           </div>
@@ -166,7 +168,7 @@
   >
     <!-- Swiper -->
     <swiper-container
-      class="mySwiper absolute inset-0"
+      class="mySwiper absolute inset-0 w-full h-full"
       speed="600"
       parallax="true"
       loop="true"

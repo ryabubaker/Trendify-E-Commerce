@@ -143,6 +143,11 @@ export const routes: Routes = [
         title: 'Checkout',
         canActivate: [authGuard],
       },
+      {
+        path: 'forgot',
+        loadComponent: () => import('./features/forgotpassword/forgotpassword.component').then(m => m.ForgotpasswordComponent),
+        title: 'Forgot Password',
+      },
     ],
   },
   // 404 fallback
