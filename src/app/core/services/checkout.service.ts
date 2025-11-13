@@ -27,7 +27,7 @@ export class CheckoutService {
 
   checkOutSession(data: any, id: string): Observable<any> {
     return this.httpClient.post(
-      `${environment.baseUrl}orders/checkout-session/${id}?url=https;//localhost:4200/`,
+      `${environment.baseUrl}orders/checkout-session/${id}?url=https://trendify-e-commerce-h2waew2cc-ryabubakers-projects.vercel.app/`,
       {
         shippingAddress: data,
       }
