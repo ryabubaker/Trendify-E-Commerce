@@ -135,20 +135,27 @@ export const routes: Routes = [
           import('./features/allorders/allorders.component').then(
             (m) => m.AllordersComponent
           ),
-          canActivate: [authGuard],
-      },
-      {
-        path: 'checkout/:id',
-        loadComponent: () => import('./features/checkout/checkout.component').then(m => m.CheckoutComponent),
-        title: 'Checkout',
         canActivate: [authGuard],
       },
       {
-        path: 'forgot',
-        loadComponent: () => import('./features/forgotpassword/forgotpassword.component').then(m => m.ForgotpasswordComponent),
-        title: 'Forgot Password',
+        path: 'checkout/:id',
+        loadComponent: () =>
+          import('./features/checkout/checkout.component').then(
+            (m) => m.CheckoutComponent
+          ),
+        title: 'Checkout',
+        canActivate: [authGuard],
       },
     ],
+  },
+
+  {
+    path: 'forgot',
+    loadComponent: () =>
+      import('./features/forgotpassword/forgotpassword.component').then(
+        (m) => m.ForgotpasswordComponent
+      ),
+    title: 'Forgot Password',
   },
   // 404 fallback
   { path: '**', component: NotfoundComponent, title: 'Not Found' },

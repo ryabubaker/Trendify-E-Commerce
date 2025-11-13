@@ -16,7 +16,6 @@ import { Router, RouterLink } from '@angular/router';
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
 import { InputOtp } from 'primeng/inputotp';
-import { error } from 'node:console';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -32,7 +31,7 @@ import { CookieService } from 'ngx-cookie-service';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './forgotpassword.component.html',
-  styleUrl: './forgotpassword.component.scss',
+  styleUrl: './forgotpassword.component.css',
   encapsulation: ViewEncapsulation.None,
 })
 export class ForgotpasswordComponent {
