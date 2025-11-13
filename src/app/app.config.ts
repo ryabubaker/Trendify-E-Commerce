@@ -1,8 +1,9 @@
+import { provideServiceWorker } from '@angular/service-worker';
 import {
   ApplicationConfig,
   importProvidersFrom,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection,
+  provideZoneChangeDetection, isDevMode,
 } from '@angular/core';
 import {
   PreloadAllModules,
@@ -55,6 +56,14 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    importProvidersFrom(CookieService),
+    importProvidersFrom(CookieService), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 };
+
+
