@@ -46,9 +46,7 @@
               formControlName="name"
               type="text"
               placeholder="Ahmed"
-              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
-              [class.border-0]="!(name?.invalid && name?.touched)"
-              [class.border]="name?.invalid && name?.touched"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border border-grey-2 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1 focus-visible:outline-none"
               [class.border-red-500]="name?.invalid && name?.touched"
             />
             <span
@@ -75,9 +73,7 @@
               formControlName="email"
               type="email"
               placeholder="Ahmed@gmail.com"
-              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
-              [class.border-0]="!(email?.invalid && email?.touched)"
-              [class.border]="email?.invalid && email?.touched"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border border-grey-2 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1 focus-visible:outline-none"
               [class.border-red-500]="email?.invalid && email?.touched"
             />
             <span
@@ -101,9 +97,7 @@
               formControlName="password"
               [type]="showPassword ? 'text' : 'password'"
               placeholder="xxxxxxxxxxxx"
-              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
-              [class.border-0]="!(password?.invalid && password?.touched)"
-              [class.border]="password?.invalid && password?.touched"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border border-grey-2 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1 focus-visible:outline-none"
               [class.border-red-500]="password?.invalid && password?.touched"
             />
             <span
@@ -113,7 +107,7 @@
             </span>
             <span
               class="absolute inset-y-0 right-3 flex items-center text-main cursor-pointer"
-              (click)="togglePasswordVisibility()"
+              (click)="togglePasswordVisibility('password')"
             >
               <i [ngClass]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
             </span>
@@ -135,11 +129,9 @@
           <div class="relative">
             <input
               formControlName="rePassword"
-              type="password"
+              [type]="showRePassword ? 'text' : 'password'"
               placeholder="xxxxxxxxxxxx"
-              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
-              [class.border-0]="!(rePassword?.invalid && rePassword?.touched)"
-              [class.border]="rePassword?.invalid && rePassword?.touched"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border border-grey-2 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1 focus-visible:outline-none"
               [class.border-red-500]="
                 rePassword?.invalid && rePassword?.touched
               "
@@ -151,8 +143,9 @@
             </span>
             <span
               class="absolute inset-y-0 right-3 flex items-center text-main cursor-pointer"
+              (click)="togglePasswordVisibility('rePassword')"
             >
-              <i class="fa fa-eye-slash"></i>
+              <i [ngClass]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
             </span>
           </div>
           @if (rePassword?.errors?.['required'] && rePassword?.touched) {
@@ -177,9 +170,7 @@
               formControlName="phone"
               type="tel"
               placeholder="01000000000"
-              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
-              [class.border-0]="!(phone?.invalid && phone?.touched)"
-              [class.border]="phone?.invalid && phone?.touched"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border border-grey-2 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1 focus-visible:outline-none"
               [class.border-red-500]="phone?.invalid && phone?.touched"
             />
             <span
@@ -203,7 +194,7 @@
               [(ngModel)]="acceptedTerms"
               [ngModelOptions]="{ standalone: true }"
               name="terms"
-              class="h-4 w-4 rounded border-main text-main checked:bg-main focus:ring-0 focus:outline-none drop-shadow-[0_0_2.3px_rgb(139,94,53)]"
+              class="h-4 w-4 rounded border-main text-main checked:accent-main focus:ring-0 focus:outline-none drop-shadow-[0_0_2.3px_rgb(139,94,53)]"
             />
             <label class="text-sm text-text mt-2">
               I agree to the

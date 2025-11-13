@@ -1,0 +1,153 @@
+<section class="mt-36 mb-20 custom-container">
+  <div class="breadcrumb mb-8">
+    <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+  </div>
+
+  <div class="container max-w-full py-10 min-h-screen">
+    <h1 class="text-3xl text-text mb-4">Orders Details</h1>
+    <div class="grid xl:grid-cols-2 gap-3">
+      @if (isloading) { @for(item of [1,2,3 ,4 ,5 ,6]; track $index){
+      <div class="flex flex-col gap-4 mb-4 w-full">
+        <app-product-card [loading]="true" ></app-product-card>
+      </div>
+      } } @else if (allOrders) { @for (order of allOrders; track order._id) {
+      <div class="bg-white rounded-lg p-3 sm:p-5 flex flex-col gap-3">
+        <div class="flex justify-between items-center">
+          <h3 class="text-text sm:text-2xl">Order ID: {{ order.id }}</h3>
+          <div class="status flex gap-2">
+            @if (order.isPaid) {
+            <span
+              class="text-[#22c55e] bg-[#f0fdf4] px-2 py-2 sm:px-3 rounded-lg text-sm text-center h-fit"
+              >Paid</span
+            >
+            }@else {
+            <span
+              class="text-[#f97316] bg-[#fff7ed] px-2 py-2 sm:px-3 rounded-lg text-sm text-center h-fit"
+              >Unpaid</span
+            >
+            }
+          </div>
+        </div>
+        <div
+          class="custom-scrollbar border border-[#D1D1D8] p-2 rounded-md flex flex-col gap-2 flex-grow xl:max-h-[250px] xl:overflow-y-auto"
+        >
+          @for (orderitem of order.cartItems; track $index) {
+          <div
+            class="flex justify-between gap-2 items-center"
+            [class]="{
+              'border-[#D1D1D8]': !$first,
+              'border-t': !$first,
+              'pt-2': !$first
+            }"
+          >
+            <div class="flex gap-3 items-center">
+              <div class="min-w-[100px] h-[100px]">
+                <img
+                  [src]="orderitem.product.imageCover"
+                  class="w-full h-full object-cover rounded-md"
+                  [alt]="orderitem.product.title"
+                />
+              </div>
+              <div class="flex flex-col gap-1">
+                <h3 class="text-text sm:text-[1.25rem]">
+                  {{ orderitem.product.title.split(" ", 3).join(" ") }}
+                </h3>
+                <span class="text-grey-2">{{
+                  orderitem.product.brand.name
+                }}</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-1">
+              <h3 class="text-text sm:text-[1.25rem]">
+                {{ orderitem.price }}EGP
+              </h3>
+              <span class="text-grey-2 self-end"
+                >Qyt: {{ orderitem.count }}</span
+              >
+            </div>
+          </div>
+          }
+        </div>
+        <div class="flex flex-col md:flex-row gap-3 justify-between mt-auto">
+          <div
+            class="detils flex flex-col bg-[#F9F9F9] p-3 rounded-md h-fit gap-2 flex-grow"
+          >
+            <span class="text-grey-2">
+              <span class="font-medium text-text">Mobile:</span>
+              {{ order.shippingAddress.phone }}
+            </span>
+            <span class="text-grey-2">
+              <span class="font-medium text-text">Address:</span>
+              {{ order.shippingAddress.details }}
+            </span>
+            <span class="text-grey-2">
+              <span class="font-medium text-text">City:</span>
+              Giza
+            </span>
+            <span class="text-grey-2">
+              <span class="font-medium text-text">Country:</span>
+              {{ order.shippingAddress.city }}
+            </span>
+            <span class="text-grey-2">
+              <span class="font-medium text-text">Payment Method:</span>
+              {{ order.paymentMethodType }}
+            </span>
+          </div>
+          <div class="bg-[#F9F9F9] p-3 rounded-md h-fit">
+            <ul
+              class="flex flex-col gap-y-5 pb-5 mb-5 border-b border-[#D1D1D8] text-text"
+            >
+              <li class="flex justify-between gap-32 xl:gap-16">
+                <span>Subtotal</span>
+                <span class="text-grey-2"
+                  >{{ order.totalOrderPrice }}EGP</span
+                >
+              </li>
+              <li class="flex justify-between gap-32 xl:gap-16">
+                <span>Shipping</span>
+                <span class="text-grey-2"
+                  >{{ order.shippingPrice }}.00EGP</span
+                >
+              </li>
+              <li class="flex justify-between gap-32 xl:gap-16">
+                <span>Tax</span>
+                <span class="text-grey-2"
+                  >{{ order.taxPrice }}.00EGP</span
+                >
+              </li>
+            </ul>
+
+            <div class="flex justify-between gap-32 xl:gap-16 text-text">
+              <span class="font-medium">Total</span>
+              <span class="font-medium">{{ order.totalOrderPrice }}EGP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      } } @else {
+      <div
+        class="col-span-2 bg-white rounded-lg h-[300px] px-10 flex flex-col justify-center items-center text-center shadow-sm"
+      >
+        <div class="text-6xl text-gray-300 mb-4">
+          <i class="fa-solid fa-box-open"></i>
+        </div>
+        <h4 class="text-xl text-text font-medium mb-2">
+          You don't have any orders yet!
+        </h4>
+        <p class="text-grey-2 mb-4">
+          Looks like you haven’t placed any orders. Start shopping now to fill
+          your cart.
+        </p>
+        <a
+          routerLink="/shop"
+          class="inline-flex items-center gap-2 bg-primary text-white px-6 py-2 rounded-md hover:bg-primary/90 transition"
+        >
+          Go to Shop
+          <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+      </div>
+
+      }
+    </div>
+  </div>
+</section>

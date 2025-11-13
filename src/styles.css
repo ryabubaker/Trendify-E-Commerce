@@ -1,6 +1,12 @@
 @import "tailwindcss";
+@import "tailwindcss-primeui";
 
-/* ---------------- THEME TOKENS ---------------- */
+@import 'ngx-toastr/toastr';
+
+
+/* Import feature-specific Tailwind layers */
+@import "./app/features/home/home.styles.css";
+
 @theme {
   --color-main: #8b5e35;
   --color-secondary: #9b7e5c;

@@ -1,0 +1,89 @@
+.menueDetials .p-accordion {
+  --p-accordion-header-color: var(--color-text);
+  --p-accordion-header-font-weight: 500;
+  --p-accordion-header-active-color: var(--color-main);
+}
+.menueDetials .p-accordionheader {
+  padding: 17px 0;
+  font-size: 24px;
+}
+.menueDetials .p-accordionpanel {
+  border-bottom: 1px solid #9d9daa;
+}
+
+.menueDetials .p-accordioncontent-content {
+  padding: 12px 0px;
+}
+
+.menueDetials .p-rating-option-active .p-rating-icon {
+  color: #ffc000;
+}
+
+.swiper-wrapper {
+  max-height: 750px;
+}
+@media (min-width: 768px) {
+  swiper-container {
+    height: 450px;
+  }
+}
+@media (min-width: 790px) {
+  swiper-container {
+    height: 470px;
+  }
+}
+@media (min-width: 800px) {
+  swiper-container {
+    height: 500px;
+  }
+}
+@media (min-width: 850px) {
+  swiper-container {
+    height: 550px;
+  }
+}
+@media (min-width: 900px) {
+  swiper-container {
+    height: 675px;
+  }
+}
+@media (min-width: 1024px) {
+  swiper-container {
+    height: 280px;
+  }
+}
+@media (min-width: 1080px) {
+  swiper-container {
+    height: 300px;
+  }
+}
+@media (min-width: 1115px) {
+  swiper-container {
+    height: 350px;
+  }
+}
+@media (min-width: 1190px) {
+  swiper-container {
+    height: 380px;
+  }
+}
+@media (min-width: 1235px) {
+  swiper-container {
+    height: 375px;
+  }
+}
+@media (min-width: 1280px) {
+  swiper-container {
+    height: 400px;
+  }
+}
+
+.responsive-skeleton {
+  width: 30rem;
+}
+
+@media (max-width: 768px) {
+  .responsive-skeleton {
+    width: 20rem;
+  }
+}

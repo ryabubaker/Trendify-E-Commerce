@@ -1,8 +1,7 @@
 <section class="mt-36 mb-20 custom-container">
-  <app-breadcrumb></app-breadcrumb>
+  <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
   <div class="category-top section-title mb-8">
     <h2>Categories</h2>
-    <p>Full Outfit</p>
   </div>
   <div class="category-bottom mt-[34px] w-full sm:flex sm:justify-between">
     <p-drawer
@@ -32,17 +31,14 @@
               </p-accordion-header>
               <p-accordion-content>
                 <div class="mt-4">
-                  <div
-                    class="text-[#868484] font-medium mb-4 cursor-pointer hover:text-text"
-                    (click)="filterByCategory('all', 'All Products')"
-                    [class.text-text]="activeCategoryId === 'all'"
-                  >
-                    All Products
-                  </div>
                   @for(cat of categories; track cat._id) {
                   <div
                     class="text-[#868484] font-medium mb-4 cursor-pointer hover:text-text"
-                    (click)="filterByCategory(cat._id, cat.name)"
+                    (click)="
+                      cat._id === 'all'
+                        ? onAllProductsClick()
+                        : onCategoryClick(cat)
+                    "
                     [class.text-text]="activeCategoryId === cat._id"
                   >
                     {{ cat.name }}
@@ -69,17 +65,14 @@
           </p-accordion-header>
           <p-accordion-content>
             <div class="mt-4">
-              <div
-                class="text-[#868484] font-medium mb-4 cursor-pointer hover:text-text"
-                (click)="filterByCategory('all', 'All Products')"
-                [class.text-text]="activeCategoryId === 'all'"
-              >
-                All Products
-              </div>
               @for(cat of categories; track cat._id) {
               <div
                 class="text-[#868484] font-medium mb-4 cursor-pointer hover:text-text"
-                (click)="filterByCategory(cat._id, cat.name)"
+                (click)="
+                  cat._id === 'all'
+                    ? onAllProductsClick()
+                    : onCategoryClick(cat)
+                "
                 [class.text-text]="activeCategoryId === cat._id"
               >
                 {{ cat.name }}
@@ -168,7 +161,7 @@
         class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 mt-10"
       >
         @for (p of products; track p._id) {
-        <app-product-card [loading]="false" [product]="p"></app-product-card>
+        <app-product-card [inWishList]="wishListService.isInWishlist(p.id)" [loading]="false" [product]="p"></app-product-card>
         }
       </div>
 

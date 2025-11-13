@@ -1,7 +1,435 @@
 <section class="custom-container mt-36">
-  <div class="h-72">
+  <div class="h-[72px]">
     <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
   </div>
 
-  <div></div>
+  <div
+    class="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between my-10 gap-8"
+  >
+    <div
+      class="w-full sm:w-[90%] lg:w-[48%] flex flex-col md:flex-row md:gap-4 items-start gap-4"
+    >
+      <div class="w-[80%] mx-auto sm:mx-0 sm:w-[100%] md:w-[12%]">
+        @if(dataDone){
+        <div
+          class="swiper-content pt-12 relative flex-grow border-main hidden md:block"
+        >
+          <swiper-container
+            #verticalSwiper
+            [direction]="'vertical'"
+            [slidesPerView]="4"
+            [spaceBetween]="8"
+            [grabCursor]="true"
+            style="height: 400px"
+          >
+            @for (img of productDetails.images; track $index) {
+            <swiper-slide
+              class="bg-gray-200 !h-auto border-2 border-main active::border-main/50 hover:border-main/50 rounded-xl overflow-hidden"
+            >
+              <img
+                [src]="img"
+                alt="Product Details"
+                class="w-full h-full object-cover"
+                (click)="changeCoverImage(img)"
+              />
+            </swiper-slide>
+            }
+          </swiper-container>
+
+          <button
+            (click)="categorySlider('prev')"
+            class="absolute -top-1 z-30 left-1/2 -translate-x-1/2 bg-white/80 hover:bg-main px-3 rounded-md shadow-lg hover:text-white text-main transition-all duration-300"
+          >
+            <i class="fa-solid fa-chevron-up text-xl"></i>
+          </button>
+
+          <button
+            (click)="categorySlider('next')"
+            class="absolute -bottom-[45px] z-30 left-1/2 -translate-x-1/2 bg-white/80 hover:bg-main px-3 rounded-md shadow-lg hover:text-white text-main transition-all duration-300"
+          >
+            <i class="fa-solid fa-chevron-down text-xl"></i>
+          </button>
+        </div>
+
+        <div
+          class="swiper-content relative flex-grow border-gray-400 order-2 md:hidden"
+        >
+          <swiper-container
+            #horizontalSwiper
+            class="mySwiper flex-grow space-y-5 px-1 relative"
+            [slidesPerView]="3"
+            [spaceBetween]="2"
+            [grabCursor]="true"
+            navigation="false"
+          >
+            @for (img of productDetails.images; track $index) {
+            <swiper-slide
+              class="bg-gray-900 text-center mx-auto !h-[120px] !w-[100px] border border-main !mb-[2px] !mt-1 rounded-xl overflow-hidden"
+            >
+              <img
+                [src]="img"
+                class="w-[100%] h-[100%] cursor-pointer"
+                alt="Product Details"
+                (click)="changeCoverImage(img)"
+              />
+            </swiper-slide>
+            }
+          </swiper-container>
+
+          <button
+            (click)="categorySlider('prev')"
+            class="absolute top-1/2 -right-8 z-30 transform -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full text-main bg-white shadow-md hover:bg-main hover:text-white transitions duration-300"
+          >
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
+          <button
+            (click)="categorySlider('next')"
+            class="absolute top-1/2 -left-8 z-30 transform -translate-y-1/2 w-8 h-8 flex items-center justify-center text-main rounded-full bg-white shadow-md hover:bg-main hover:text-white transitions duration-300"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+        </div>
+
+        }@else {
+        <div
+          class="flex flex-row items-center justify-center gap-2 md:gap-3 md:!flex-col"
+        >
+          @for (prod of [1 , 2 , 3]; track $index) {
+          <p-skeleton size="6rem" />
+          }
+        </div>
+        }
+      </div>
+      <div class="w-full md:w-[90%] h-[300px] md:h-[631px] flex-grow relative">
+        @if(dataDone){
+
+        <img
+          class="w-full h-full rounded-md shadow-md object-cover"
+          [src]="productDetails.imageCover"
+          [alt]="productDetails.title"
+        />
+        <div
+          (click)="addToWishList(productDetails.id); $event.stopPropagation()"
+          class="absolute cursor-pointer top-3 right-3 w-[45px] h-[45px] rounded-full bg-white flex justify-center items-center border border-main"
+        >
+          <i
+            [ngClass]="inWishList ? 'fas' : 'far'"
+            class="fa-heart text-main text-[24px]"
+          ></i>
+        </div>
+
+        }@else {
+        <div class="flex items-center justify-center">
+          <p-skeleton [size]="isMobile ? '20rem' : '30rem'" />
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="w-full sm:w-[90%] lg:w-[48%] px-2 md:px-0">
+      <div class="mb-4 text-center md:text-start">
+        <p>
+          <span class="text-text font-medium text-sm md:text-[14px]">
+            <i class="!text-[#ffc000] fa-solid fa-star pr-2"></i
+            >{{ productDetails.ratingsAverage || "0.0" }} ({{
+              productDetails.ratingsQuantity || "0"
+            }})
+          </span>
+        </p>
+        <h1 class="text-[32px] font-semibold text-text">
+          {{ productDetails.title }}
+        </h1>
+      </div>
+
+      <div class="mt-6 md:mt-8">
+        <p class="font-medium text-[16px] text-text pb-4">
+          Quantity <span class="text-main">{{ productDetails.quantity }}</span>
+        </p>
+        <div
+          class="flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
+          <div
+            class="buy-quantity flex items-center bg-white border border-[#8B5D37] px-2 md:px-4 py-3 rounded-lg shadow-sm"
+          >
+            <button
+              pButton
+              class="p-button-text text-[#667085] text-lg px-3"
+              aria-label="button"
+              (click)="decreaseQuantity()"
+            >
+              <i class="fa-solid fa-minus text-main"></i>
+            </button>
+
+            <span class="text-lg font-semibold text-text px-3">
+              {{ quantity }}
+            </span>
+
+            <button
+              pButton
+              aria-label="button"
+              class="add-cart p-button-text text-[#667085] text-lg px-3"
+              (click)="increaseQuantity()"
+            >
+              <i class="fa-solid fa-plus text-main"></i>
+            </button>
+          </div>
+
+          <button
+            (click)="addToCart(productDetails.id)"
+            class="bg-main text-white flex justify-center gap-4 text-lg font-medium flex-grow px-6 py-3 rounded-lg shadow-md hover:bg-opacity-90 transition-all duration-200"
+          >
+            <span [class.hidden]="loading">
+              <span class="font-bold pr-2"> {{ productPrice }} EGP </span>
+              <span class="pr-2">•</span>
+              Add To Cart
+            </span>
+            <span [class.hidden]="!loading">
+              <i class="text-white fas fa-spin fa-spinner"></i>
+            </span>
+          </button>
+        </div>
+        <div class="mt-6 md:mt-8">
+          <p class="text-[#667085] text-[14px] md:text-[16px] font-semibold">
+            <i class="fa-solid fa-truck"></i> Estimated Delivery:
+            <span class="text-text">01 Jan 2023 - 03 Jan 2023</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="menueDetials px-2 md:px-0">
+    <div class="card flex justify-content-center">
+      <p-accordion value="2">
+        <p-accordion-panel value="0">
+          <p-accordion-header>
+            <ng-template #toggleicon let-active="active">
+              @if (active) {
+              <i class="fa-solid fa-minus"></i>
+              } @else {
+              <i class="fa-solid fa-plus"></i>
+              }
+            </ng-template>
+            <span class="flex items-center gap-2 w-full"> Details </span>
+          </p-accordion-header>
+          <p-accordion-content>
+            <p class="m-0 !text-text">
+              {{ productDetails.description }}
+            </p>
+          </p-accordion-content>
+        </p-accordion-panel>
+
+        <p-accordion-panel value="1">
+          <p-accordion-header>
+            <ng-template #toggleicon let-active="active">
+              @if (active) {
+              <i class="fa-solid fa-minus"></i>
+              } @else {
+              <i class="fa-solid fa-plus"></i>
+              }
+            </ng-template>
+            <span class="flex items-center gap-2 w-full"> Reviews </span>
+          </p-accordion-header>
+          <p-accordion-content>
+            <div
+              class="w-full flex flex-col gap-4 md:gap-0 md:flex-row items-start justify-between"
+            >
+              <div class="w-full md:w-[38%] bg-white rounded-lg p-8 h-auto">
+                <div>
+                  <h1 class="text-[14px] pb-4 font-medium text-[#0d0c22]">
+                    Employee Reviews
+                  </h1>
+                  <p class="text-[40px] pb-4 font-bold text-text">
+                    {{ productDetails.ratingsAverage }}
+                  </p>
+                  <p-rating
+                    [ngModel]="productDetails.ratingsAverage"
+                    [readonly]="true"
+                    [stars]="5"
+                    class="!text-[#ffc000]"
+                  ></p-rating>
+                  <p class="font-medium text-[12px] pt-4 text-[#858585]">
+                    (578 Reviews)
+                  </p>
+                </div>
+
+                <div>
+                  <div class="pt-4">
+                    <div class="space-y-2">
+                      <div class="flex items-center gap-2">
+                        <span class="text-[14px] font-medium text-text"
+                          >5 stars</span
+                        >
+                        <div
+                          class="flex-1 bg-gray-200 rounded-full h-2 relative"
+                        >
+                          <div
+                            class="bg-yellow-400 h-2 rounded-full"
+                            style="width: 85%"
+                          ></div>
+                        </div>
+                        <span class="w-8 text-sm text-gray-700 font-medium"
+                          >488</span
+                        >
+                      </div>
+
+                      <div class="flex items-center gap-2">
+                        <span class="text-[14px] font-medium text-text"
+                          >4 stars</span
+                        >
+                        <div
+                          class="flex-1 bg-gray-200 rounded-full h-2 relative"
+                        >
+                          <div
+                            class="bg-yellow-400 h-2 rounded-full"
+                            style="width: 50%"
+                          ></div>
+                        </div>
+                        <span class="w-8 text-sm text-gray-700 font-medium"
+                          >74</span
+                        >
+                      </div>
+
+                      <div class="flex items-center gap-2">
+                        <span class="text-[14px] font-medium text-text"
+                          >3 stars</span
+                        >
+                        <div
+                          class="flex-1 bg-gray-200 rounded-full h-2 relative"
+                        >
+                          <div
+                            class="bg-yellow-400 h-2 rounded-full"
+                            style="width: 15%"
+                          ></div>
+                        </div>
+                        <span class="w-8 text-sm text-gray-700 font-medium"
+                          >14</span
+                        >
+                      </div>
+
+                      <div class="flex items-center gap-2">
+                        <span class="text-[14px] font-medium text-text"
+                          >2 stars</span
+                        >
+                        <div
+                          class="flex-1 bg-gray-200 rounded-full h-2 relative"
+                        >
+                          <div
+                            class="bg-gray-300 h-2 rounded-full"
+                            style="width: 0%"
+                          ></div>
+                        </div>
+                        <span class="w-8 text-sm text-gray-700 font-medium"
+                          >0</span
+                        >
+                      </div>
+
+                      <div class="flex items-center gap-2">
+                        <span class="text-[14px] font-medium text-text"
+                          >1 star</span
+                        >
+                        <div
+                          class="flex-1 bg-gray-200 rounded-full h-2 relative"
+                        >
+                          <div
+                            class="bg-gray-300 h-2 rounded-full"
+                            style="width: 0%"
+                          ></div>
+                        </div>
+                        <span class="w-8 text-sm text-gray-700 font-medium"
+                          >0</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full md:w-[60%] bg-white">
+                <div class="pt-3 pb-4 px-8 border-b">
+                  <p class="font-semibold text-[12px] pb-4 text-[#9D9DAA]">
+                    Jan 20, 2024
+                  </p>
+                  <div class="flex pb-3 text-yellow-400 text-lg">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star text-2nd-text"></i>
+                  </div>
+                  <div class="flex items-center gap-4 mb-3">
+                    <div
+                      class="w-10 h-10 bg-[#8B5E35]/20 text-main rounded-full flex items-center justify-center font-semibold text-sm"
+                    >
+                      AK
+                    </div>
+                    <div>
+                      <h4 class="font-medium text-text text-[14px]">Alex K.</h4>
+                    </div>
+                  </div>
+                  <p class="text-sm font-medium text-2nd-text mb-3">
+                    Senior Analyst
+                  </p>
+
+                  <p class="text-text text-[16px] font-semibold pb-3">
+                    Lorem ipsum dolor sit amet consectetur. Egestas tincidunt
+                    sed laoreet urna id morbi turpis. Est elit egestas
+                  </p>
+                </div>
+
+                <div class="pt-3 pb-4 px-8">
+                  <p class="font-semibold text-[12px] pb-4 text-[#9D9DAA]">
+                    Jan 20, 2024
+                  </p>
+                  <div class="flex pb-3 text-yellow-400 text-lg">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star text-2nd-text"></i>
+                  </div>
+                  <div class="flex items-center gap-4 mb-3">
+                    <div
+                      class="w-10 h-10 bg-[#8B5E35]/20 text-main rounded-full flex items-center justify-center font-semibold text-sm"
+                    >
+                      AK
+                    </div>
+                    <div>
+                      <h4 class="font-medium text-text text-[14px]">Alex K.</h4>
+                    </div>
+                  </div>
+                  <p class="text-sm font-medium text-2nd-text mb-3">
+                    Senior Analyst
+                  </p>
+
+                  <p class="text-text text-[16px] font-semibold pb-3">
+                    Lorem ipsum dolor sit amet consectetur. Egestas tincidunt
+                    sed laoreet urna id morbi turpis. Est elit egestas
+                  </p>
+                </div>
+              </div>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+      </p-accordion>
+    </div>
+  </div>
+
+  <div class="py-5 pb-7">
+    <div class="pb-5">
+      <h1 class="text-text font-semibold text-[40px]">Similar products</h1>
+    </div>
+
+    <div class="gap-3 grid grid-cols-2 lg:grid-cols-4">
+      @if(dataDone){ @for (simProd of similarProducts; track simProd.id) {
+      <app-product-card
+        [loading]="false"
+        [product]="simProd"
+      ></app-product-card>
+
+      } } @else{ @for (i of [1, 2, 3, 4]; track $index) {
+      <app-product-card [loading]="true"></app-product-card>
+      } }
+    </div>
+  </div>
 </section>

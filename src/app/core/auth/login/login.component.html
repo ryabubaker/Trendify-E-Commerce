@@ -48,9 +48,7 @@
               formControlName="email"
               type="email"
               placeholder="Ahmed@gmail.com"
-              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
-              [class.border-0]="!(email?.invalid && email?.touched)"
-              [class.border]="email?.invalid && email?.touched"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border border-grey-2 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1 focus-visible:outline-none"
               [class.border-red-500]="email?.invalid && email?.touched"
             />
             <span
@@ -74,9 +72,7 @@
               formControlName="password"
               [type]="showPassword ? 'text' : 'password'"
               placeholder="xxxxxxxxxxxx"
-              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border-0 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1"
-              [class.border-0]="!(password?.invalid && password?.touched)"
-              [class.border]="password?.invalid && password?.touched"
+              class="mt-1 block w-full rounded-lg ps-9 px-4 py-2 border border-grey-2 placeholder:text-[15px] placeholder:text-grey-2 focus:border-main focus:ring-main focus:ring-1 focus-visible:outline-none"
               [class.border-red-500]="password?.invalid && password?.touched"
             />
             <span
@@ -105,7 +101,7 @@
             <div class="flex items-center gap-2">
               <input
                 type="checkbox"
-                class="h-4 w-4 rounded border-main text-main checked:bg-main focus:ring-0 focus:outline-none drop-shadow-[0_0_2.3px_rgb(139,94,53)]"
+                class="h-4 w-4 rounded border-main text-main checked:accent-main focus:ring-0 focus:outline-none drop-shadow-[0_0_2.3px_rgb(139,94,53)]"
               />
               <label class="text-sm text-text">Remember Me</label>
             </div>

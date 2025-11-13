@@ -12,11 +12,11 @@ import {
   CarouselModule,
   OwlOptions,
 } from 'ngx-owl-carousel-o';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-categories-slider',
-  imports: [CarouselModule],
-
+  imports: [CarouselModule, RouterLink],
   templateUrl: './categories-slider.component.html',
   styleUrl: './categories-slider.component.css',
 })
@@ -25,43 +25,41 @@ export class CategoriesSliderComponent implements OnInit, AfterViewInit {
 
   @ViewChild('categoriesCarousel') categoriesCarousel!: CarouselComponent;
 
-  constructor() {
-    window.addEventListener('resize', () => {
-      this.reinitializeOwlCarousel();
-    }, {passive:true});
-    window.addEventListener('load', () => {
-      this.reinitializeOwlCarousel();
-    },{passive:true});
-  }
-
-  ngAfterViewInit() {
-    this.reinitializeOwlCarousel();
-  }
-
-  reinitializeOwlCarousel(): void {
-    this.categoriesCarousel.ngOnInit();
-    this.categoriesCarousel.ngAfterContentInit();
-  }
-
-  categoriesList: Category[] = [];
-  loading: boolean = true;
+  categoriesList: (Category & { loaded: boolean })[] = [];
+  loading = true;
 
   ngOnInit(): void {
     this.getAllCategoriesData();
   }
 
-  getAllCategoriesData(): void {
+  ngAfterViewInit(): void {
+    // Reinitialize after view init (safe timing)
+    this.reinitializeOwlCarousel();
+
+    window.addEventListener('resize', () => this.reinitializeOwlCarousel(), {
+      passive: true,
+    });
+  }
+
+  private reinitializeOwlCarousel(): void {
+    if (this.categoriesCarousel) {
+      this.categoriesCarousel.ngOnInit();
+      this.categoriesCarousel.ngAfterContentInit();
+    }
+  }
+
+  private getAllCategoriesData(): void {
     this.loading = true;
+
     this.categoriesService.getAllCategories().subscribe({
       next: (res) => {
         this.categoriesList = res.data.map(
-          (cat:any) => ({ ...cat, loaded: false } as Category & { loaded: boolean })
+          (cat) => ({ ...cat, loaded: false })
         );
-        setTimeout(() => {
-          this.loading = false;
-        }, 1000); 
+
+        setTimeout(() => (this.loading = false), 400);
       },
-      error: (err) => {
+      error: () => {
         this.loading = false;
       },
     });
@@ -70,7 +68,7 @@ export class CategoriesSliderComponent implements OnInit, AfterViewInit {
   // Carousel configuration
   customOptions: OwlOptions = {
     loop: true,
-    margin:0,
+    margin: 0,
     nav: false,
     dots: true,
     autoplay: false,
@@ -82,11 +80,11 @@ export class CategoriesSliderComponent implements OnInit, AfterViewInit {
     },
   };
 
-  prevSlide() {
-    this.categoriesCarousel.prev();
+  prevSlide(): void {
+    this.categoriesCarousel?.prev();
   }
 
-  nextSlide() {
-    this.categoriesCarousel.next();
+  nextSlide(): void {
+    this.categoriesCarousel?.next();
   }
 }

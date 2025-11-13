@@ -1,28 +1,38 @@
 <section class="h-[280px] flex items-center justify-center">
-  <div class="max-w-[1340px] mx-auto relative w-full flex items-center justify-center">
-    
+  <div
+    class="max-w-[1340px] mx-auto relative w-full flex items-center justify-center"
+  >
     <!-- Left button -->
-    <div (click)="prevSlide()" class="btn-slider cursor-pointer hover:bg-main group md:flex hidden items-center justify-center w-[40px] h-[40px] rounded-full border border-main absolute left-[2%] top-1/2 -translate-y-1/2 z-30 p-2">
+    <div
+      (click)="prevSlide()"
+      class="btn-slider cursor-pointer hover:bg-main group md:flex hidden items-center justify-center w-[40px] h-[40px] rounded-full border border-main absolute left-[2%] top-1/2 -translate-y-1/2 z-30 p-2"
+    >
       <button class="text-main">
         <i class="group-hover:text-white fa-solid fa-chevron-left text-lg"></i>
       </button>
     </div>
 
-    <owl-carousel-o #categoriesCarousel [options]="customOptions" class="w-[calc(100%-12%)] max-w-[1172px]">
+    <owl-carousel-o
+      #categoriesCarousel
+      [options]="customOptions"
+      class="w-[calc(100%-12%)] max-w-[1172px]"
+    >
       @for (category of categoriesList; track $index) {
       <ng-template #owlElement carouselSlide>
         <div class="w-fit mx-auto h-[140px]">
           @if(!loading) {
           <div class="w-[100px] h-[100px] relative">
             <img
-              class="object-cover w-full h-full rounded-full"
+              class="object-cover w-full h-full rounded-full cursor-pointer"
               [src]="category.image"
               [alt]="category.name"
               (load)="$any(category).loaded = true"
+              [routerLink]="['/category/', category.slug, category._id]"
             />
 
             @if(!$any(category).loaded) {
-            <div role="status"
+            <div
+              role="status"
               class="absolute inset-0 bg-gray-200 rounded-full animate-pulse dark:bg-gray-700"
             ></div>
             }
@@ -33,8 +43,9 @@
             {{ category.name.split(" ", 1).join(" ") }}
           </p>
           } }@else {
-          <div role="status"
-            class="w-[100px] h-[100px] bg-gray-200 animate-pulse rounded-full dark:bg-gray-700"
+          <div
+            role="status"
+            class="w-[100px] h-[100px] bg-gray-200 rounded-full dark:bg-gray-700"
           ></div>
           }
         </div>
@@ -43,11 +54,13 @@
     </owl-carousel-o>
 
     <!-- Right button -->
-    <div (click)="nextSlide()" class="btn-slider cursor-pointer hover:bg-main group md:flex hidden items-center justify-center w-[40px] h-[40px] rounded-full border border-main absolute right-[2%] top-1/2 -translate-y-1/2 z-30 p-2">
+    <div
+      (click)="nextSlide()"
+      class="btn-slider cursor-pointer hover:bg-main group md:flex hidden items-center justify-center w-[40px] h-[40px] rounded-full border border-main absolute right-[2%] top-1/2 -translate-y-1/2 z-30 p-2"
+    >
       <button class="text-main">
         <i class="group-hover:text-white fa-solid fa-chevron-right text-lg"></i>
       </button>
     </div>
-
   </div>
 </section>

@@ -1,0 +1,164 @@
+<section class="mb-10 custom-container">
+  <div class="mb-10">
+    <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+  </div>
+  <div
+    class="my-8 px-2 md:px-0 w-full flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8"
+  >
+    <div
+      class="w-full"
+      [ngClass]="{ 'lg:w-[65%]': hasItems, 'lg:w-full': !hasItems }"
+    >
+      <div class="flex items-center justify-between">
+        <h1
+          class="text-[28px] md:text-[40px] font-semibold leading-[150%] pb-4 flex flex-col sm:flex-row sm:items-center gap-2"
+        >
+          Cart @if(cartProduct.numOfCartItems > 0){
+          <span class="!font-medium !text-[16px] md:!text-[18px] !text-main">
+            {{ cartCount() }} items
+          </span>
+          }
+        </h1>
+        <button
+          (click)="clearCart()"
+          class="my-6 px-6 py-3 bg-[#8B5E35] text-white rounded-md shadow-md hover:opacity-90 transition"
+        >
+          Clear Cart
+        </button>
+      </div>
+      @if (isloading) { @for(item of [1,2,3]; track $index){
+      <div class="flex flex-col gap-4 mb-4 w-full">
+        <app-product-card [loading]="true"></app-product-card>
+      </div>
+      } } @else if (cartProduct?.data?.products?.length) { @for (prod of
+      cartProduct.data.products; track prod._id) {
+
+      <app-cart-card
+        [id]="prod.product.id"
+        [title]="prod.product.title"
+        [image]="prod.product.imageCover"
+        [count]="prod.count"
+        [price]="prod.price"
+        (itemRemoved)="onItemRemoved($event)"
+        (countUpdated)="onCountUpdated($event)"
+      ></app-cart-card>
+      } } @else{
+      <div
+        class="flex flex-col items-center justify-center min-h-[60vh] text-center p-6"
+      >
+        <i
+          class="fa-solid fa-cart-plus text-7xl text-gray-400 mb-4 animate-pulse"
+        ></i>
+        <h2 class="text-2xl font-semibold mb-2 text-gray-700">
+          Your Cart is Empty
+        </h2>
+        <p class="text-gray-500 mb-4">
+          Looks like you haven’t added anything yet!
+        </p>
+        <a
+          routerLink="/category"
+          class="bg-main text-white px-6 py-2 rounded-xl shadow-md transition-all duration-300"
+        >
+          Shop Now
+        </a>
+      </div>
+
+      }
+
+      <div
+        class="w-full border border-main bg-[#8B5E3542] rounded-md p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-3 mt-6 text-center sm:text-left"
+      >
+        <i class="fa-solid fa-tag text-main"></i>
+        <p class="text-text text-sm md:text-base">
+          20% Instant Discount with Federal Bank Debit Cards on a min spend of
+          $150. T&amp;C Apply.
+        </p>
+      </div>
+    </div>
+    <!-- Order Summary -->
+    @if(hasItems && cartTotal > 0) {
+
+    <div class="w-full lg:w-[35%] mt-6 lg:mt-0">
+      <div
+        class="bg-white shadow-lg rounded-xl p-6 w-full border border-[#D1D1D8]"
+      >
+        <h2 class="text-[24px] font-medium mb-6 text-text">Order Summary</h2>
+
+        <div class="flex justify-between mb-4">
+          <p class="text-text">Price</p>
+          <p class="text-text font-medium">{{ cartTotal }}</p>
+        </div>
+
+        <div class="flex justify-between mb-4">
+          <p class="text-text">Discount</p>
+          <p class="text-text font-medium">20%</p>
+        </div>
+
+        <div class="flex justify-between mb-4">
+          <p class="text-text">Shipping</p>
+          <p class="text-[#8B5E35] font-medium">{{ valueOfMoneyMethod }}</p>
+        </div>
+
+        <div class="flex justify-between mb-4">
+          <p class="text-text">Coupon Applied</p>
+          <p class="text-text font-medium">0.00EGP</p>
+        </div>
+
+        <div class="border-b border-gray-300 my-4"></div>
+
+        <div class="flex justify-between mb-6">
+          <p class="text-text font-semibold">TOTAL</p>
+          <p class="text-text font-semibold">{{ discountedTotal }}</p>
+        </div>
+
+        <div class="flex justify-between mb-6">
+          <p class="text-text font-medium text-[14px] mb-2">
+            Estimated Delivery by
+          </p>
+          <p class="font-medium mb-6">01 Feb, 2023</p>
+        </div>
+
+        <div class="flex mb-6 rounded-md w-full relative">
+          <input
+            type="text"
+            placeholder="Coupon Code"
+            class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-1 focus:ring-[#8B5E35] w-full"
+          />
+          <button
+            class="bg-[#8B5E35] text-white px-4 py-2 rounded-lg hover:bg-[#6e4728] transition absolute top-[10%] left-[100%] -translate-x-20"
+          >
+            Apply
+          </button>
+        </div>
+
+        <button
+          [routerLink]="['/checkout', cartProduct.cartId]"
+          class="cursor-pointer w-full rounded-[32px] bg-[#8B5E35] text-white py-3 text-[20px] font-semibold hover:bg-[#6e4728] transition"
+        >
+          Proceed to Checkout
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="py-5 pb-3">
+    <div class="pb-5">
+      <h1 class="text-text font-semibold text-[40px]">Similar products</h1>
+    </div>
+
+    <div
+      class="gap-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
+      @if(dataDone){ @for (simProd of similarProduct; track simProd.id) {
+      <app-product-card
+        [loading]="false"
+        [product]="simProd"
+        (ShowData)="getLoggedUserCart()"
+      ></app-product-card>
+      } } @else { @for(item of [1,2,3,4]; track $index) {
+      <app-product-card [loading]="true"></app-product-card>
+      } }
+    </div>
+  </div>
+</section>

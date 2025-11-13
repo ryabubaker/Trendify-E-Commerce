@@ -33,7 +33,7 @@
     class="custom-container grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 mt-10"
   >
     @for (p of products; track p) {
-    <app-product-card [product]="p"></app-product-card>
+    <app-product-card [product]="p" [inWishList]="wishListService.isInWishlist(p.id)"></app-product-card>
     }
   </div>
   <div class="text-center mt-8">

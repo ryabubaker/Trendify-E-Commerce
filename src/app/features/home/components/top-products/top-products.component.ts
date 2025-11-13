@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { Product } from '../../../../core/models/product.model';
+import { Product } from '../../../../core/models/product.interface';
 import { ProductsService } from '../../../../core/services/products/products.service';
 import { Observable } from 'rxjs';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
+import { WishListService } from '../../../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-top-products',
@@ -12,10 +13,13 @@ import { ProductCardComponent } from '../../../../shared/components/product-card
 })
 export class TopProductsComponent {
   private readonly productsService = inject(ProductsService);
+  readonly wishListService = inject(WishListService);
+
   topSelling: Product[] = [];
 
   ngOnInit(): void {
     this.getTopSellingProducts();
+    this.wishListService.fetchWishListItems();
   }
 
   getTopSellingProducts(): void {

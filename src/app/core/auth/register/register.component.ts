@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  OnInit,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -18,40 +23,21 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   acceptedTerms: boolean = false;
   isLoading: boolean = false;
   showPassword = false;
+  showRePassword = false;
   msgError: string = '';
 
-  registerForm: FormGroup = new FormGroup(
-    {
-      name: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(20),
-      ]),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-      rePassword: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-      phone: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/^01[0125][0-9]{8}$/),
-      ]),
-    },
-    {
-      validators: [this.confirmPassword],
-    }
-  );
+  registerForm!: FormGroup;
+
+  ngOnInit(): void {
+    this.initForm();
+  }
 
   confirmPassword(group: AbstractControl) {
     return group.get('password')?.value === group.get('rePassword')?.value
@@ -85,7 +71,39 @@ export class RegisterComponent {
     }
   }
 
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
+  togglePasswordVisibility(field: 'password' | 'rePassword') {
+    if (field === 'password') {
+      this.showPassword = !this.showPassword;
+    } else {
+      this.showRePassword = !this.showRePassword;
+    }
+  }
+
+  initForm() {
+    this.registerForm = new FormGroup(
+      {
+        name: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ]),
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        password: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+        rePassword: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+        phone: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^01[0125][0-9]{8}$/),
+        ]),
+      },
+      {
+        validators: [this.confirmPassword],
+      }
+    );
   }
 }

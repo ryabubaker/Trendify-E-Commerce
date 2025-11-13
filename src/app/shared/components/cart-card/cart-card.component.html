@@ -1,0 +1,64 @@
+<div
+  class="flex flex-col sm:flex-row items-center gap-6 mb-6 w-full bg-white shadow-lg rounded-xl transition-transform hover:scale-[1.01]"
+>
+  <div
+    class="w-full md:w-[400px] h-[300px] md:h-[200px] md:p-2 flex justify-center items-center"
+  >
+    <img
+      class="w-full h-full object-cover rounded-lg"
+      [src]="image()"
+      [alt]="title()"
+    />
+  </div>
+
+  <div
+    class="flex-grow flex flex-col md:flex-row md:items-center p-4 justify-between gap-6 w-full"
+  >
+    <div class="w-full md:w-auto flex flex-col gap-4">
+      <h2
+        class="text-gray-800 text-[18px] md:text-[20px] font-semibold text-center md:text-left"
+      >
+        {{ title().split(" ").slice(0, 3).join(" ") }}
+      </h2>
+
+      <div
+        class="bg-gray-100 w-full md:w-[180px] h-[48px] flex items-center justify-between border border-gray-300 rounded-md px-4"
+      >
+        <button
+          type="button"
+          (click)="updateCount(-1)"
+          class="text-gray-700 hover:text-red-500 transition"
+        >
+          <i *ngIf="!loadingMinus" class="fa-solid fa-minus"></i>
+          <i *ngIf="loadingMinus" class="text-main fas fa-spin fa-spinner"></i>
+        </button>
+
+        <span class="text-gray-800 font-medium">{{ count() }}</span>
+
+        <button
+          type="button"
+          (click)="updateCount(1)"
+          class="text-gray-700 hover:text-green-600 transition"
+        >
+          <i *ngIf="!loadingPlus" class="fa-solid fa-plus"></i>
+          <i *ngIf="loadingPlus" class="text-main fas fa-spin fa-spinner"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center md:items-end gap-4">
+      <p class="text-[18px] md:text-[20px] font-semibold text-gray-900">
+        {{ lineTotal() | number : "1.0-2" }} EGP
+      </p>
+
+      <button
+        type="button"
+        (click)="removeItem()"
+        class="text-main hover:text-red-600 transition duration-300"
+      >
+        <i *ngIf="!loadingTrash" class="fa-solid fa-trash text-[20px]"></i>
+        <i *ngIf="loadingTrash" class="text-main fas fa-spin fa-spinner"></i>
+      </button>
+    </div>
+  </div>
+</div>

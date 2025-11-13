@@ -1,0 +1,325 @@
+<section class="mt-24 max-w-7xl mx-auto px-2 xl:px-0 pb-6 custom-container">
+  <div class="breadcrumb mb-8">
+    <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+  </div>
+
+  <div class="big-container flex flex-col items-start justify-between">
+    <div class="item-1 w-full lg:!w-[70%]">
+      <form [formGroup]="formSelectAddress">
+        <div class="mb-8">
+          @if(!addInfoDone) { @for (item of [1,2,3]; track $index) {
+          <div class="mb-3">
+            <app-product-card [loading]="true"></app-product-card>
+          </div>
+
+          } }@else { @for(add of InfoAdd; track add._id){
+
+          <div
+            class="w-full p-2 lg:p-4 rounded-[10px] bg-white flex items-center gap-4 mb-5"
+          >
+            <input
+              formControlName="selectedOption"
+              class="border-[2px] border-2nd-text"
+              type="radio"
+              id="address"
+              name="selectedOption"
+              [value]="add"
+            />
+            <div
+              class="flex sm:flex-row flex-col items-start sm:items-center w-full justify-between"
+            >
+              <div id="address" class="w-full sm:w-[70%] pb-4">
+                <div class="flex items-end gap-2 sm:gap-4">
+                  <h1 class="font-medium text-[20px] text-text leading-[32px]">
+                    {{ add.city }}
+                  </h1>
+                  <span class="px-2 text-main rounded-lg border border-main">{{
+                    add.name
+                  }}</span>
+                </div>
+                <p class="mt-2 text-text text-[16px]">
+                  {{ add.details }}
+                </p>
+
+                <p class="mt-2 text-text font-normal">
+                  <span class="!font-medium">Contact - </span>{{ add.phone }}
+                </p>
+              </div>
+              <div
+                class="w-full justify-center pt-4 border-t border-[#D1D1D8] sm:w-[30%] sm:border-0 flex items-center sm:justify-end"
+              >
+                <span
+                  (click)="editOfSpacificAddress(add._id)"
+                  class="cursor-pointer pr-8"
+                >
+                  @if(!add.isEditing){
+                  <i class="text-main fa-solid fa-pen-to-square"></i>
+                  } @else {
+                  <i class="text-main fas fa-spin fa-spinner"></i>
+                  }
+                </span>
+                <span
+                  (click)="removeAddress(add._id)"
+                  class="cursor-pointer pl-8 border-l border-[#D1D1D8]"
+                >
+                  @if(!add.isDeleting){
+                  <i class="text-main fa-solid fa-trash"></i>
+                  } @else {
+                  <i class="text-main fas fa-spin fa-spinner"></i>
+                  }
+                </span>
+              </div>
+            </div>
+          </div>
+          } @empty {
+          <div
+            class="bg-gradient-to-r from-[#8B5E35] to-[#9B7E5C] text-white p-4 border-2 border-[#9B7E5C] rounded-lg text-center font-semibold flex items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+          >
+            <i class="fa fa-times-circle mr-2 text-xl"></i> No new addresses
+            have been added.
+          </div>
+
+          } }
+        </div>
+      </form>
+
+      <div
+        (click)="showDialog()"
+        class="flex items-center pb-6 gap-4 border-b border-2nd-text cursor-pointer"
+      >
+        <i class="text-main fa-solid fa-plus"></i>
+        <p class="text-[20px] font-medium leading-[20px] text-main">
+          Add New Address
+        </p>
+      </div>
+
+      <div class="mb-6">
+        <div class="my-6">
+          <h1 class="text-text font-medium text-[20px] leading-[24px]">
+            Shipment Method
+          </h1>
+        </div>
+
+        <form>
+          <div class="border border-[#d1d1d8] py-4 px-6 rounded-sm">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-4">
+                <input
+                  type="radio"
+                  name="Moneymethod"
+                  [(ngModel)]="valueOfMoney"
+                  value="Free"
+                  checked
+                />
+                <h2 class="text-text font-medium text-[16px] leading-[20px]">
+                  Free
+                </h2>
+                <p class="text-text">Regular Shipment</p>
+              </div>
+              <div>
+                <p class="text-text font-medium">01 Feb, 2025</p>
+              </div>
+            </div>
+          </div>
+          <div class="border border-[#d1d1d8] py-4 px-6 rounded-sm">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-4">
+                <input
+                  type="radio"
+                  name="Moneymethod"
+                  [(ngModel)]="valueOfMoney"
+                  value="100EGP"
+                />
+                <h2 class="text-text font-medium text-[16px] leading-[20px]">
+                  100EGP
+                </h2>
+                <p class="text-text">Priority Shipping</p>
+              </div>
+              <div>
+                <p class="text-text font-medium">28 Jan, 2025</p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="mb-6">
+        <div class="my-6">
+          <h1 class="text-text font-medium text-[20px] leading-[24px]">
+            Payment Method
+          </h1>
+        </div>
+
+        <form [formGroup]="formPaymentMethod">
+          <div class="border border-[#d1d1d8] py-4 px-6 rounded-sm">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-4">
+                <input
+                  formControlName="paymentMethod"
+                  value="online"
+                  name="paymentMethod"
+                  type="radio"
+                />
+                <h2 class="text-text font-medium text-[16px] leading-[20px]">
+                  Online
+                </h2>
+              </div>
+              <div>
+                <p class="text-text font-medium">01 Feb, 2025</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="border border-[#d1d1d8] py-4 px-6 rounded-sm">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-4">
+                <input
+                  type="radio"
+                  formControlName="paymentMethod"
+                  value="cash"
+                  name="paymentMethod"
+                />
+                <h2 class="text-text font-medium text-[16px] leading-[20px]">
+                  Cash On Delivery
+                </h2>
+              </div>
+              <div>
+                <p class="text-text font-medium">28 Jan, 2025</p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="card flex justify-center">
+        <p-dialog
+          header="Add New Address"
+          [modal]="true"
+          [(visible)]="visible"
+          [style]="{ width: '30rem' }"
+          (onHide)="cancelFunction()"
+        >
+          <form [formGroup]="addressInfo" (ngSubmit)="addAddress()">
+            <div class="flex flex-col sm:flex-row items-center gap-8 mb-5">
+              <div class="w-full sm:w-[45%]">
+                <input
+                  formControlName="name"
+                  pInputText
+                  type="text"
+                  placeholder="Name..."
+                  id="username"
+                  class="w-full flex-auto !border-[2px] !border-[#D1D1D8]"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="w-full sm:w-[45%]">
+                <input
+                  type="tel"
+                  formControlName="phone"
+                  placeholder="phone..."
+                  id="username"
+                  class="w-full focus:!border-main flex-auto !rounded-lg !border-[2px] !border-[#D1D1D8]"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="mb-5">
+              <textarea
+                formControlName="details"
+                pInputText
+                placeholder="Your Address..."
+                class="w-[100%] !border-[2px] !border-[#D1D1D8]"
+                autocomplete="off"
+              ></textarea>
+            </div>
+
+            <div class="w-full mb-5">
+              <p-autoComplete
+                class="!w-full"
+                [suggestions]="items"
+                (completeMethod)="search($event)"
+                [dropdown]="true"
+                placeholder="Type City Name"
+                class="w-full custom-autocomplete"
+                formControlName="city"
+              >
+              </p-autoComplete>
+            </div>
+
+            <div class="flex justify-between gap-2">
+              <p-button
+                class="cancelButton"
+                type="button"
+                label="Cancel"
+                severity="secondary"
+                (click)="cancelFunction()"
+              />
+              <p-button class="sendButton" type="submit" label="Send" />
+            </div>
+          </form>
+        </p-dialog>
+      </div>
+    </div>
+
+    <div class="item-2 w-full lg:!w-[70%]">
+      <div
+        class="bg-white shadow-lg rounded-xl p-6 w-full border border-[#D1D1D8]"
+      >
+        <h2 class="text-[24px] font-medium mb-6 text-text">Order Summary</h2>
+
+        <div class="flex justify-between mb-4">
+          <p class="text-text">Price</p>
+          <p class="text-text font-medium">{{ cartPrice }}</p>
+        </div>
+
+        <div class="flex justify-between mb-4">
+          <p class="text-text">Discount</p>
+          <p class="text-text font-medium">20%</p>
+        </div>
+
+        <div class="flex justify-between mb-4">
+          <p class="text-text">Shipping</p>
+          <p class="text-[#8B5E35] font-medium">{{ valueOfMoney }}</p>
+        </div>
+
+        <div class="flex justify-between mb-4">
+          <p class="text-text">Coupon Applied</p>
+          <p class="text-text font-medium">0.00EGP</p>
+        </div>
+
+        <div class="border-b border-gray-300 my-4"></div>
+
+        <div class="flex justify-between mb-6">
+          <p class="text-text font-semibold">TOTAL</p>
+          <p class="text-text font-semibold">{{ discountedTotal }}</p>
+        </div>
+
+        <div class="flex justify-between mb-6">
+          <p class="text-text font-medium text-[14px] mb-2">
+            Estimated Delivery by
+          </p>
+          <p class="font-medium mb-6">01 Feb, 2023</p>
+        </div>
+
+        <div class="flex mb-6 rounded-md w-full relative">
+          <input
+            type="text"
+            placeholder="Coupon Code"
+            class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-1 focus:ring-[#8B5E35] w-full"
+          />
+          <button
+            class="bg-[#8B5E35] text-white px-4 py-2 rounded-lg hover:bg-[#6e4728] transition absolute top-[10%] left-[100%] -translate-x-20"
+          >
+            Apply
+          </button>
+        </div>
+
+        <button
+          (click)="orderCheckOut()"
+          class="w-full rounded-[32px] bg-[#8B5E35] text-white py-3 text-[20px] font-semibold hover:bg-[#6e4728] transition"
+        >
+          Pay Now
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

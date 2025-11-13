@@ -1,34 +1,387 @@
-<p-menubar [model]="items" class="custom-menubar">
-  <!-- Logo -->
-  <ng-template #start>
-    <a routerLink="/" class="text-main font-hedvig text-[32px]"> Trendify </a>
-  </ng-template>
-
-  <!-- Custom item template -->
-  <ng-template #item let-item let-root="root">
+<nav
+  [ngClass]="navClasses()"
+  class="px-2 xl:px-0 fixed top-0 left-0 w-full z-50"
+>
+  <div
+    class="max-w-screen-xl mx-auto py-4 flex items-center justify-between gap-4"
+  >
+    <!-- Brand (left) -->
     <a
-      [routerLink]="item.routerLink"
-      routerLinkActive="text-main font-semibold"
-      [routerLinkActiveOptions]="{ exact: true }"
-      pRipple
-      class="flex items-center p-menubar-item-link text-sm p-2 text-text-2 hover:text-main transition"
+      [routerLink]="navHomeLink()"
+      class="shrink-0 text-main leading-[2.68rem] text-[32px] font-tendify-anchor font-semibold whitespace-nowrap"
     >
-      <span>{{ item.label }}</span>
+      Trendify
     </a>
-  </ng-template>
 
-  <!-- Wrap hamburger + icons together -->
-  <ng-template #end>
-    <div class="flex items-center gap-5 text-main text-xl custom-right-wrapper">
-      <!-- PrimeNG auto-injects the hamburger button here -->
-      <ng-container></ng-container>
+    <!-- Center nav (desktop only) -->
+    <ul class="hidden md:flex items-center gap-4 flex-1 justify-center">
+      <li>
+        <a
+          [routerLink]="navHomeLink()"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          [ngClass]="toneClass()"
+        >
+          Home
+        </a>
+      </li>
 
-      <!-- Icons -->
-      <button aria-label="Wishlist">
-        <i class="fa-regular fa-heart"></i>
+      <li>
+        <a
+          routerLink="/category"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          [ngClass]="toneClass()"
+          >Categories</a
+        >
+      </li>
+
+      <li>
+        <a
+          routerLink="/about"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          [ngClass]="toneClass()"
+          >About Us</a
+        >
+      </li>
+
+      <li>
+        <a
+          routerLink="/blog"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          [ngClass]="toneClass()"
+          >Blog</a
+        >
+      </li>
+
+      <li>
+        <a
+          routerLink="/contact"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          [ngClass]="toneClass()"
+          >Contact Us</a
+        >
+      </li>
+    </ul>
+
+    <div class="shrink-0 flex items-center gap-4">
+      <ul class="flex items-center gap-6">
+        @if (isAuthenticated()) {
+        <!-- Wishlist -->
+        <li
+          routerLink="/wishlist"
+          class="relative cursor-pointer"
+          (click)="closeMenuOnMobileNavigate()"
+        >
+          <i
+            class="fa-regular fa-heart text-[24px]"
+            [ngClass]="toneClass()"
+          ></i>
+          <span
+            class="absolute -top-3 -right-4 bg-main text-white text-xs min-w-[1.5rem] h-6 px-1 flex items-center justify-center rounded-full font-bold border border-white"
+            >{{ wishlistCount() }}</span
+          >
+        </li>
+
+        <!-- Cart -->
+        <li
+          routerLink="/cart"
+          class="relative cursor-pointer"
+          (click)="closeMenuOnMobileNavigate()"
+        >
+          <i
+            class="fa-solid fa-cart-shopping text-[20px]"
+            [ngClass]="toneClass()"
+          ></i>
+          <span
+            class="absolute -top-3 -right-4 bg-main text-white text-xs min-w-[1.5rem] h-6 px-1 flex items-center justify-center rounded-full font-bold border border-white"
+          >
+            {{ countCart() }}
+          </span>
+        </li>
+
+        <!-- User menu -->
+        <li class="cursor-pointer relative">
+          <!-- Client-only + skip hydration -->
+          @if (isBrowser) {
+          <p-menu
+            #menu
+            [model]="itemsHome"
+            [popup]="true"
+            appendTo="body"
+            ngSkipHydration
+          ></p-menu>
+          <i
+            class="fa-solid fa-user text-[20px]"
+            [ngClass]="toneClass()"
+            (click)="menu?.toggle($event)"
+          ></i>
+
+          }
+        </li>
+        } @else {
+        <li
+          routerLink="/login"
+          class="cursor-pointer text-lg md:text-base text-main"
+        >
+          Login
+        </li>
+        <li
+          routerLink="/register"
+          class="cursor-pointer text-lg md:text-base text-main"
+        >
+          Sign Up
+        </li>
+        }
+      </ul>
+
+      <!-- Mobile burger unchanged -->
+      <button
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        type="button"
+        class="md:hidden text-[30px] w-10 h-10 flex items-center justify-center"
+        [ngClass]="toneClass()"
+        aria-controls="navbar-menu"
+      >
+        @if (!menuOpen()) {
+        <i class="fa-solid fa-bars" [ngClass]="toneClass()"></i> } @else {
+        <i class="fa-solid fa-xmark" [ngClass]="toneClass()"></i> }
       </button>
-      <button aria-label="Cart"><i class="fas fa-cart-shopping"></i></button>
-      <button aria-label="User"><i class="fa-regular fa-user"></i></button>
     </div>
-  </ng-template>
-</p-menubar>
+  </div>
+
+  <!-- Collapsible nav (mobile only) -->
+  <div
+    id="navbar-menu"
+    [ngClass]="{
+      'translate-y-0 pointer-events-auto': menuOpen(),
+      '-translate-y-[150%] pointer-events-none': !menuOpen()
+    }"
+    class="md:hidden absolute left-0 top-16 w-full z-40"
+  >
+    <ul
+      class="navLinks flex flex-col items-center gap-y-4 px-4 py-6 font-medium rounded-lg shadow-lg border bg-bg-main"
+    >
+      <li>
+        <a
+          [routerLink]="navHomeLink()"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          >Home</a
+        >
+      </li>
+
+      <li>
+        <a
+          routerLink="/category"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          >Categories</a
+        >
+      </li>
+
+      <li>
+        <a
+          routerLink="/about"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          >About Us</a
+        >
+      </li>
+
+      <li>
+        <a
+          routerLink="/blog"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          >Blog</a
+        >
+      </li>
+
+      <li>
+        <a
+          routerLink="/contact"
+          routerLinkActive="router-active"
+          (click)="closeMenuOnMobileNavigate()"
+          class="py-2 xl:px-3 text-[17px] font-bold leading-[1.6875rem] cursor-pointer"
+          >Contact Us</a
+        >
+      </li>
+
+      <!-- Auth actions for mobile -->
+      @if (!isAuthenticated()) {
+      <li class="pt-2 flex gap-4">
+        <a routerLink="/login" class="cursor-pointer text-main">Login</a>
+        <a routerLink="/register" class="cursor-pointer text-main">Sign Up</a>
+      </li>
+      }
+    </ul>
+  </div>
+
+  @if (isBrowser) {
+  <div class="card flex justify-center">
+    <form [formGroup]="changePassword" (ngSubmit)="ResetPassword()">
+      <p-dialog
+        header="Change Password"
+        [modal]="true"
+        [(visible)]="visible"
+        [style]="{ width: '35rem' }"
+        ngSkipHydration
+      >
+        <!-- Old Password -->
+        @let currentpassword = changePassword.get('currentPassword');
+        <div class="flex flex-col mb-2">
+          <label
+            for="oldpassword"
+            class="block mb-2 text-lg font-medium text-text-color"
+            >Old Password</label
+          >
+          <div class="relative">
+            <i
+              class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-main"
+            ></i>
+            <input
+              formControlName="currentPassword"
+              [type]="isPasswordVisibleOld ? 'text' : 'password'"
+              id="oldpassword"
+              class="bg-bg-main font-medium border placeholder:text-2nd-text border-gray-300 text-text-color text-sm rounded-lg focus:ring-main focus:border-main block w-full p-3 pl-10"
+              placeholder="Enter a valid Password..."
+            />
+            <i
+              (click)="togglePasswordVisibility('current')"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-main"
+              [class]="
+                isPasswordVisibleOld
+                  ? 'fa-solid fa-eye'
+                  : 'fa-solid fa-eye-slash'
+              "
+            ></i>
+          </div>
+          @if (currentpassword?.errors && currentpassword?.touched) {
+          <div
+            class="bg-[#D00439] text-white text-sm font-medium p-3 rounded-lg flex items-center gap-2 shadow-md"
+          >
+            <ul>
+              @if (currentpassword?.getError('required')) {
+              <li>Current password is required</li>
+              }
+            </ul>
+          </div>
+          }
+        </div>
+
+        <!-- New Password -->
+        @let password = changePassword.get('password');
+        <div class="flex flex-col mb-4">
+          <label
+            for="newpassword"
+            class="block mb-2 text-lg font-medium text-text-color"
+            >New Password</label
+          >
+          <div class="relative">
+            <i
+              class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-main"
+            ></i>
+            <input
+              formControlName="password"
+              [type]="isPasswordVisibleNew ? 'text' : 'password'"
+              id="newpassword"
+              class="bg-bg-main font-medium border placeholder:text-2nd-text border-gray-300 text-text-color text-sm rounded-lg focus:ring-main focus:border-main block w-full p-3 pl-10"
+              placeholder="Enter a valid Password..."
+            />
+            <i
+              (click)="togglePasswordVisibility('new')"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-main"
+              [class]="
+                isPasswordVisibleNew
+                  ? 'fa-solid fa-eye'
+                  : 'fa-solid fa-eye-slash'
+              "
+            ></i>
+          </div>
+          @if (password?.errors && password?.touched) {
+          <div
+            class="bg-[#D00439] text-white text-sm font-medium p-3 rounded-lg flex items-center gap-2 shadow-md"
+          >
+            <ul>
+              @if (password?.getError('required')) {
+              <li>New password is required</li>
+              } @else if (password?.getError('pattern')) {
+              <li>Start with a capital letter and be at least 8 characters.</li>
+              }
+            </ul>
+          </div>
+          }
+        </div>
+
+        <!-- Confirm Password -->
+        @let rePassword = changePassword.get('rePassword');
+        <div class="flex flex-col mb-4">
+          <label
+            for="comfirmpassword"
+            class="block mb-2 text-lg font-medium text-text-color"
+            >Confirm Password</label
+          >
+          <div class="relative">
+            <i
+              class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-main"
+            ></i>
+            <input
+              formControlName="rePassword"
+              [type]="isPasswordVisibleConfirm ? 'text' : 'password'"
+              id="comfirmpassword"
+              class="bg-bg-main font-medium border placeholder:text-2nd-text border-gray-300 text-text-color text-sm rounded-lg focus:ring-main focus:border-main block w-full p-3 pl-10"
+              placeholder="Enter a valid Password..."
+            />
+            <i
+              (click)="togglePasswordVisibility('confirm')"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-main"
+              [class]="
+                isPasswordVisibleConfirm
+                  ? 'fa-solid fa-eye'
+                  : 'fa-solid fa-eye-slash'
+              "
+            ></i>
+          </div>
+          @if (rePassword?.errors && rePassword?.touched ||
+          changePassword.getError('mismatch')) {
+          <div
+            class="bg-[#D00439] text-white text-sm font-medium p-3 rounded-lg flex items-center gap-2 shadow-md"
+          >
+            <ul>
+              @if (rePassword?.getError('required')) {
+              <li>Confirm password is required</li>
+              } @else if (changePassword.getError('mismatch')) {
+              <li>Enter a confirmed password.</li>
+              }
+            </ul>
+          </div>
+          }
+        </div>
+
+        <div class="flex justify-end gap-2 changepassnavbar">
+          <p-button
+            label="Cancel"
+            severity="secondary"
+            (click)="visible = false"
+          ></p-button>
+          <p-button label="Save" type="submit"></p-button>
+        </div>
+      </p-dialog>
+    </form>
+  </div>
+  }
+</nav>

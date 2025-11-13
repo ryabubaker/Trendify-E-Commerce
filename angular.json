@@ -84,6 +84,7 @@
               "buildTarget": "app:build:development"
             }
           },
+          
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

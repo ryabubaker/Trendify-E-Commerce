@@ -1,7 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Product } from '../../../../core/models/product.model';
+import { Product } from '../../../../core/models/product.interface';
 import { ProductsService } from '../../../../core/services/products/products.service';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
+import { WishListService } from '../../../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-flash-sale',
@@ -11,10 +12,12 @@ import { ProductCardComponent } from '../../../../shared/components/product-card
 })
 export class FlashSaleComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
+  readonly wishListService = inject(WishListService);
   productList: Product[] = [];
 
   ngOnInit(): void {
     this.getAllProductsData();
+    this.wishListService.fetchWishListItems();
   }
 
   getAllProductsData(): void {

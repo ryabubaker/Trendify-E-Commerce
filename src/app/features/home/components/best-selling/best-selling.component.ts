@@ -4,7 +4,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CategoriesService } from '../../../../core/services/categories/categories.service';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
-import { Product } from '../../../../core/models/product.model';
+import { Product } from '../../../../core/models/product.interface';
+import { WishListService } from '../../../../core/services/wishlist.service';
 
 // Define an interface for the tabs for better type safety
 interface Tab {
@@ -22,6 +23,7 @@ interface Tab {
 export class BestSellingComponent implements OnInit {
   private readonly categoryService = inject(CategoriesService);
   private readonly productsService = inject(ProductsService);
+  readonly wishListService = inject(WishListService);
 
   tabs: Tab[] = [];
   products: Product[] = [];
@@ -31,6 +33,7 @@ export class BestSellingComponent implements OnInit {
 
   ngOnInit() {
     this.loadCategoriesAndInitialProducts();
+    this.wishListService.fetchWishListItems();
   }
 
   loadCategoriesAndInitialProducts(): void {
@@ -58,7 +61,7 @@ export class BestSellingComponent implements OnInit {
       this.products = this.productsCache[categoryId];
       return;
     }
-    
+
     const params: Record<string, string | number> = {
       limit: 4,
       sort: '-sold',
@@ -75,7 +78,10 @@ export class BestSellingComponent implements OnInit {
         this.productsCache[categoryId] = fetchedProducts;
       },
       error: (err) => {
-        console.error(`Error fetching products for category ${categoryId}:`, err);
+        console.error(
+          `Error fetching products for category ${categoryId}:`,
+          err
+        );
         this.products = [];
       },
     });

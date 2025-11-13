@@ -7,16 +7,16 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
+import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { CategoriesService } from '../../core/services/categories/categories.service';
 import {
   ProductFilter,
   ProductsService,
 } from '../../core/services/products/products.service';
-import { Product } from './../../core/models/product.model';
+import { Product } from '../../core/models/product.interface';
 import { Category } from '../../core/models/category.interface';
-import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 
 // PrimeNG Imports
 import { DrawerModule } from 'primeng/drawer';
@@ -26,6 +26,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { Menu, MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { WishListService } from '../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-categories',
@@ -90,12 +91,72 @@ export class CategoriesComponent implements OnInit {
 
   // Service injections
   private readonly productsService = inject(ProductsService);
+  readonly wishListService = inject(WishListService);
   private readonly categoriesService = inject(CategoriesService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  breadcrumbItems:MenuItem[]=[];
 
   ngOnInit(): void {
+       this.breadcrumbItems = [
+      { label: 'Home', routerLink: '/home' },
+      { label: 'Category'},
+    ];
     this.getAllCategories();
-    this.getProducts();
+    this.wishListService.fetchWishListItems();
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      const slugFromUrl = params.get('slug');
+
+      if (id) {
+        this.loadCategoryById(id, slugFromUrl ?? undefined);
+      } else {
+        this.resetFilters();
+        this.getProducts();
+      }
+    });
+  }
+
+  private loadCategoryById(id: string, slugFromUrl?: string) {
+    this.categoriesService.getCategoryById(id).subscribe({
+      next: (res) => {
+        const category = res.data;
+        if (!category) {
+          this.resetFilters();
+          this.getProducts();
+          return;
+        }
+
+        const canonicalSlug = category.slug;
+
+        // Redirect to canonical URL if slug mismatch
+        if (slugFromUrl !== canonicalSlug) {
+          this.router.navigate(['/category', canonicalSlug, id], {
+            replaceUrl: true,
+          });
+          return;
+        }
+
+        // Apply filters
+        this.activeCategoryId = id;
+        this.filters.category = id;
+        this.categoryName = category.name;
+        this.filters.page = 1;
+
+        this.getProducts();
+      },
+      error: () => {
+        this.resetFilters();
+        this.getProducts();
+      },
+    });
+  }
+
+  private resetFilters() {
+    this.filters = { page: 1, limit: this.pageSize, sort: '', category: 'all' };
+    this.activeCategoryId = 'all';
+    this.categoryName = 'All Products';
   }
 
   private getProducts(): void {
@@ -126,7 +187,17 @@ export class CategoriesComponent implements OnInit {
   private getAllCategories(): void {
     this.categoriesService.getAllCategories().subscribe({
       next: (response) => {
-        this.categories = response.data;
+        this.categories = [
+          {
+            _id: 'all',
+            name: 'All Products',
+            slug: 'all',
+            image: '',
+            createdAt: '',
+            updatedAt: '',
+          },
+          ...response.data,
+        ];
       },
       error: (error) => {
         console.error('Error fetching categories:', error);
@@ -139,36 +210,6 @@ export class CategoriesComponent implements OnInit {
     setTimeout(() => {
       this.dataDone = done;
     }, delay);
-  }
-
-  // Filtering actions
-  public filterByCategory(categoryId: string, name: string): void {
-    this.activeCategoryId = categoryId;
-    this.filters.category = categoryId;
-    this.categoryName = name;
-    this.filters.page = 1;
-    this.getProducts();
-    this.visible = false;
-    this.scrollToTop();
-  }
-
-  public filterByBrand(brandId: string): void {
-    this.filters.brand = brandId;
-    this.filters.page = 1;
-    this.getProducts();
-  }
-
-  public filterByKeyword(keyword: string): void {
-    this.filters.keyword = keyword;
-    this.filters.page = 1;
-    this.getProducts();
-  }
-
-  public filterByPriceRange(min: number, max: number): void {
-    this.filters.priceGte = min;
-    this.filters.priceLte = max;
-    this.filters.page = 1;
-    this.getProducts();
   }
 
   // Pagination
@@ -190,11 +231,25 @@ export class CategoriesComponent implements OnInit {
     this.getProducts();
   }
 
+  public onCategoryClick(category: Category): void {
+    this.router.navigate(['/category', category.slug, category._id]);
+  }
+
+  public onAllProductsClick(): void {
+    this.resetFilters();
+    this.getProducts();
+    this.categoryName = 'All Products';
+    this.activeCategoryId = 'all';
+  }
+
   private scrollToTop(): void {
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
+
+
+
 
   @HostListener('window:resize')
   onResize() {

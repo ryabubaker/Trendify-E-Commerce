@@ -1,26 +1,6 @@
-// Subcategory interface
-interface Subcategory {
-  _id: string;
-  name: string;
-  slug: string;
-  category: string;
-}
-
-// Category interface
-interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
-}
-
-// Brand interface
-interface Brand {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
-}
+import { Brand } from "./brand.interface";
+import { Category } from "./category.interface";
+import { Subcategory } from "./subcategory.interface";
 
 // Product interface
 export interface Product {
